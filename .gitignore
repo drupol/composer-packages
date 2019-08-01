@@ -1,0 +1,12 @@
+/composer.lock
+/vendor
+/.php_cs.cache
+/example/
+/.idea/
+/test.php
+/phpspec.yml
+!/build/.gitkeep
+/build/*
+!/tests/build/.gitkeep
+/tests/build/*
+/.phpunit.result.cache
