@@ -8,14 +8,14 @@
  [![License](https://img.shields.io/packagist/l/drupol/composer-packages.svg?style=flat-square)](https://packagist.org/packages/drupol/composer-packages)
  [![Say Thanks!](https://img.shields.io/badge/Say-thanks-brightgreen.svg?style=flat-square)](https://saythanks.io/to/drupol)
  [![Donate!](https://img.shields.io/badge/Donate-Paypal-brightgreen.svg?style=flat-square)](https://paypal.me/drupol)
- 
+
 # Composer Packages
 
 ## Description
 
 Composer Packages is a Composer plugin for getting information about installed packages in your project.
 
-It could be very useful for anyone who wants to build a package discovery system, crawling the filesystem is then not needed. 
+It could be very useful for anyone who wants to build a package discovery system, crawling the filesystem is then not needed.
 
 ## Documentation
 
@@ -110,6 +110,23 @@ use ComposerPackages\Directories;
 
 // Use your IDE auto completion to list all the available methods based on your installed packages.
 $directory = Directories::symfonyProcess();
+```
+
+**Note:** If composer is not already installed, you might get an error like
+below when using this package:
+
+```
+In Types.php line […]:
+
+  Attempted to load class "ArrayLoader" from namespace "Composer\Package\Loader".
+  Did you forget a "use" statement for e.g. "…\ArrayLoader", "…\ArrayLoader" or "…\ArrayLoader"?
+```
+
+If you do, you can explicitly require composer in your project, to ensure it's
+available:
+
+```
+composer require composer/composer
 ```
 
 ## Code quality and tests
