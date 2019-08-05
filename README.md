@@ -88,7 +88,7 @@ $package = Packages::symfonyProcess();
 $package->getName(); // To get the name.
 
 // Find all the packages where the name starts with the letter "c".
-$finder = static function (PackageInterface $package) {
+$finder = static function (PackageInterface $package) : bool {
     return 'c' === str_split($package->getName())[0];
 };
 
