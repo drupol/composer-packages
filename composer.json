@@ -2,6 +2,14 @@
     "name": "drupol/composer-packages",
     "type": "composer-plugin",
     "description": "Composer Packages is a Composer plugin for getting information about installed packages in your project.",
+    "keywords": [
+        "Packages discovery",
+        "Types discovery",
+        "Directories discovery",
+        "Composer plugin",
+        "Composer helper",
+        "Extension"
+    ],
     "license": "MIT",
     "authors": [
         {
