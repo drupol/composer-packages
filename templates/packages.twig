@@ -81,8 +81,18 @@ final class Packages implements \Countable, \IteratorAggregate
      */
     public function getIterator(): \Generator
     {
-        foreach (self::PACKAGES as $package) {
-            yield (new ArrayLoader())->load($package);
+        foreach (self::PACKAGES as $key => $package) {
+            yield $key => (new ArrayLoader())->load($package);
+        }
+    }
+
+    /**
+     * Package generator as array, keyed by their name.
+     */
+    public static function packages(): \Generator
+    {
+        foreach (self::PACKAGES as $key => $package) {
+            yield $key => $package;
         }
     }
 
