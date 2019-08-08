@@ -64,6 +64,8 @@ final class Packages implements \Countable, \IteratorAggregate
 {% endfor %}
     /**
      * {@inheritdoc}
+     *
+     * @return CompletePackage[]|\Generator
      */
     public static function find(callable $callable): \Generator
     {
@@ -78,6 +80,8 @@ final class Packages implements \Countable, \IteratorAggregate
 
     /**
      * {@inheritdoc}
+     *
+     * @return CompletePackage[]|\Generator
      */
     public function getIterator(): \Generator
     {
@@ -88,6 +92,8 @@ final class Packages implements \Countable, \IteratorAggregate
 
     /**
      * Package generator as array, keyed by their name.
+     *
+     * @return array[]|\Generator
      */
     public static function packages(): \Generator
     {
