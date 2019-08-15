@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace drupol\ComposerPackages\Exporter;
 
@@ -59,17 +59,17 @@ abstract class Exporter implements ExporterInterface
         $composer = $this->getEvent()->getComposer();
 
         $data = $this->exportToArray() + [
-            'generatedAt' => time(),
+            'generatedAt' => \time(),
             'rootPackageName' => $this->getEvent()->getComposer()->getPackage()->getName(),
         ];
 
         $installPath = $this->locateRootPackageInstallPath($composer->getConfig(), $composer->getPackage())
             . '/build/' . (new \ReflectionClass($this))->getShortName() . '.php';
 
-        $installPathTmp = $installPath . '_' . uniqid('tmp', true);
-        file_put_contents($installPathTmp, $this->twig->render($filename, $data));
-        chmod($installPathTmp, 0664);
-        rename($installPathTmp, $installPath);
+        $installPathTmp = $installPath . '_' . \uniqid('tmp', true);
+        \file_put_contents($installPathTmp, $this->twig->render($filename, $data));
+        \chmod($installPathTmp, 0664);
+        \rename($installPathTmp, $installPath);
     }
 
     /**

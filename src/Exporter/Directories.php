@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace drupol\ComposerPackages\Exporter;
 
@@ -15,7 +15,7 @@ class Directories extends Exporter
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
 
-        $packagesData = array_merge(
+        $packagesData = \array_merge(
             $data['packages'],
             $data['packages-dev']
         );
@@ -30,6 +30,6 @@ class Directories extends Exporter
                 ->getInstallPath($package);
         }
 
-        return compact('directories');
+        return \compact('directories');
     }
 }

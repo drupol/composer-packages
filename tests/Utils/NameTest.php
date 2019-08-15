@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace drupol\ComposerPackages\tests\Utils;
 
@@ -42,6 +42,6 @@ final class NameTest extends TestCase
      */
     public function testNameCamelize($name, $camelized): void
     {
-        static::assertSame($camelized, Name::camelize($name));
+        self::assertSame($camelized, Name::camelize($name));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace drupol\ComposerPackages\Twig;
 
@@ -20,7 +20,7 @@ class VarExportExtension extends AbstractExtension
      */
     public function export($data): string
     {
-        return var_export($data, true);
+        return \var_export($data, true);
     }
 
     /**

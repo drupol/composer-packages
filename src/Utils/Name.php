@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace drupol\ComposerPackages\Utils;
 
@@ -16,7 +16,7 @@ class Name
      */
     public static function camelize(string $str): string
     {
-        $str = preg_replace(
+        $str = \preg_replace(
             '/[^a-z0-9]+/i',
             ' ',
             $str
@@ -26,11 +26,11 @@ class Name
             return '';
         }
 
-        return lcfirst(
-            str_replace(
+        return \lcfirst(
+            \str_replace(
                 ' ',
                 '',
-                ucwords(
+                \ucwords(
                     $str
                 )
             )

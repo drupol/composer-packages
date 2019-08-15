@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace drupol\ComposerPackages\tests;
 
@@ -30,6 +30,6 @@ final class ClassGeneratorTest extends TestCase
 
         $test = new ClassGenerator($event);
 
-        static::assertInstanceOf(ClassGenerator::class, $test);
+        self::assertInstanceOf(ClassGenerator::class, $test);
     }
 }

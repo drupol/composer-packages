@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace drupol\ComposerPackages\tests\Exporter;
 
@@ -36,7 +36,7 @@ final class DirectoriesTest extends TestCase
         $repositoryManager = $this->createMock(RepositoryManager::class);
         $installationManager = $this->createMock(InstallationManager::class);
 
-        $installationManager->method('getInstallPath')->willReturn(realpath(__DIR__ . '/../build'));
+        $installationManager->method('getInstallPath')->willReturn(\realpath(__DIR__ . '/../build'));
 
         $this->composer->setInstallationManager($installationManager);
         $this->composer->setRepositoryManager($repositoryManager);
@@ -46,11 +46,11 @@ final class DirectoriesTest extends TestCase
             new JsonFile(__DIR__ . '/../../composer.lock'),
             $repositoryManager,
             $installationManager,
-            file_get_contents(__DIR__ . '/../../composer.json')
+            \file_get_contents(__DIR__ . '/../../composer.json')
         );
 
         $rootPackage = new RootPackage('drupol/composer-packages', '1', '1.0.0');
-        $config = new Config(false, realpath(__DIR__ . '/../'));
+        $config = new Config(false, \realpath(__DIR__ . '/../'));
 
         $this->composer->method('getEventDispatcher')->willReturn($this->eventDispatcher);
         $this->composer->method('getInstallationManager')->willReturn($installationManager);
@@ -70,7 +70,7 @@ final class DirectoriesTest extends TestCase
         $test = new Directories($event);
         $test->exportToFile('directories.twig');
 
-        static::assertFileExists(__DIR__ . '/../build/Directories.php');
+        self::assertFileExists(__DIR__ . '/../build/Directories.php');
     }
 
     public function testInstantiation(): void
@@ -83,7 +83,7 @@ final class DirectoriesTest extends TestCase
 
         $test = new Directories($event);
 
-        static::assertInstanceOf(Directories::class, $test);
+        self::assertInstanceOf(Directories::class, $test);
     }
 
     public function testMock(): void

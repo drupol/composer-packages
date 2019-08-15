@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace drupol\ComposerPackages\tests;
 
@@ -66,11 +66,11 @@ final class PluginTest extends TestCase
             new JsonFile(__DIR__ . '/../composer.lock'),
             $repositoryManager,
             $installationManager,
-            file_get_contents(__DIR__ . '/../composer.json')
+            \file_get_contents(__DIR__ . '/../composer.json')
         );
 
         $rootPackage = new RootPackage('drupol/composer-packages', '1', '1.0.0');
-        $config = new Config(false, realpath(__DIR__ . '/../'));
+        $config = new Config(false, \realpath(__DIR__ . '/../'));
 
         $this->composer->method('getEventDispatcher')->willReturn($this->eventDispatcher);
         $this->composer->method('getInstallationManager')->willReturn($installationManager);
@@ -83,7 +83,7 @@ final class PluginTest extends TestCase
     {
         $config = $this->getMockBuilder(Config::class)->disableOriginalConstructor()->getMock();
         $vendorDir = __DIR__;
-        $config->expects(static::any())->method('get')->with('vendor-dir')->willReturn($vendorDir . '/foo');
+        $config->expects(self::any())->method('get')->with('vendor-dir')->willReturn($vendorDir . '/foo');
 
         $locker = $this->getMockBuilder(Locker::class)->disableOriginalConstructor()->getMock();
         $repositoryManager = $this->getMockBuilder(RepositoryManager::class)->disableOriginalConstructor()->getMock();
@@ -99,12 +99,12 @@ final class PluginTest extends TestCase
         $repository = $this->createMock(InstalledRepositoryInterface::class);
         $expectedPath = $vendorDir . '/build';
 
-        if (!file_exists($expectedPath)) {
-            mkdir($expectedPath, 0777, true);
+        if (!\file_exists($expectedPath)) {
+            \mkdir($expectedPath, 0777, true);
         }
 
         $locker
-            ->expects(static::any())
+            ->expects(self::any())
             ->method('getLockData')
             ->willReturn([
                 'packages' => [
@@ -148,15 +148,15 @@ final class PluginTest extends TestCase
                     ],
                 ],
             ]);
-        $repositoryManager->expects(static::any())->method('getLocalRepository')->willReturn($repository);
+        $repositoryManager->expects(self::any())->method('getLocalRepository')->willReturn($repository);
 
         $composer = $this->createMock(Composer::class);
 
-        $composer->expects(static::any())->method('getConfig')->willReturn($config);
-        $composer->expects(static::any())->method('getLocker')->willReturn($locker);
-        $composer->expects(static::any())->method('getRepositoryManager')->willReturn($repositoryManager);
-        $composer->expects(static::any())->method('getPackage')->willReturn($this->getRootPackageMock());
-        $composer->expects(static::any())->method('getInstallationManager')->willReturn($installManager);
+        $composer->expects(self::any())->method('getConfig')->willReturn($config);
+        $composer->expects(self::any())->method('getLocker')->willReturn($locker);
+        $composer->expects(self::any())->method('getRepositoryManager')->willReturn($repositoryManager);
+        $composer->expects(self::any())->method('getPackage')->willReturn($this->getRootPackageMock());
+        $composer->expects(self::any())->method('getInstallationManager')->willReturn($installManager);
 
         $this->plugin::regeneration(
             new Event(
@@ -176,31 +176,31 @@ final class PluginTest extends TestCase
         $directories = new Directories();
         $types = new Types();
 
-        static::assertSame('drupol/composer-packages', \ComposerPackages\Packages::ROOT_PACKAGE_NAME);
-        static::assertInstanceOf(PackageInterface::class, \ComposerPackages\Packages::fooBar());
-        static::assertCount(4, $packages);
-        static::assertInstanceOf(PackageInterface::class, \ComposerPackages\Packages::get('foo/bar'));
+        self::assertSame('drupol/composer-packages', \ComposerPackages\Packages::ROOT_PACKAGE_NAME);
+        self::assertInstanceOf(PackageInterface::class, \ComposerPackages\Packages::fooBar());
+        self::assertCount(4, $packages);
+        self::assertInstanceOf(PackageInterface::class, \ComposerPackages\Packages::get('foo/bar'));
 
-        static::assertCount(4, $types);
-        static::assertIsIterable($types::a());
-        static::assertCount(1, $types::a());
+        self::assertCount(4, $types);
+        self::assertIsIterable($types::a());
+        self::assertCount(1, $types::a());
 
-        static::assertCount(4, $directories);
-        static::assertIsIterable($directories);
-        static::assertSame('bazTab', $directories::bazTab());
+        self::assertCount(4, $directories);
+        self::assertIsIterable($directories);
+        self::assertSame('bazTab', $directories::bazTab());
     }
 
     public function testGetSubscribedEvents(): void
     {
         $events = Plugin::getSubscribedEvents();
 
-        static::assertSame(
+        self::assertSame(
             ['post-autoload-dump' => 'regeneration'],
             $events
         );
 
         foreach ($events as $callback) {
-            static::assertIsCallable([$this->plugin, $callback]);
+            self::assertIsCallable([$this->plugin, $callback]);
         }
     }
 
@@ -213,7 +213,7 @@ final class PluginTest extends TestCase
 
         $this
             ->io
-            ->expects(static::exactly(2))
+            ->expects(self::exactly(2))
             ->method('write')
             ->withConsecutive(
                 ['<info>drupol/composer-packages:</info> Regenerating classes...'],
@@ -222,21 +222,21 @@ final class PluginTest extends TestCase
 
         $this->plugin::regeneration($event);
 
-        static::assertFileExists(__DIR__ . '/../build/Directories.php');
-        static::assertFileExists(__DIR__ . '/../build/Packages.php');
-        static::assertFileExists(__DIR__ . '/../build/Types.php');
+        self::assertFileExists(__DIR__ . '/../build/Directories.php');
+        self::assertFileExists(__DIR__ . '/../build/Packages.php');
+        self::assertFileExists(__DIR__ . '/../build/Types.php');
     }
 
     private function getRootPackageMock(): RootPackageInterface
     {
         $package = $this->createMock(RootPackageInterface::class);
-        $package->expects(static::any())->method('getName')->willReturn('drupol/composer-packages');
-        $package->expects(static::any())->method('getPrettyVersion')->willReturn('1.3.5');
-        $package->expects(static::any())->method('getSourceReference')->willReturn('aaabbbcccddd');
+        $package->expects(self::any())->method('getName')->willReturn('drupol/composer-packages');
+        $package->expects(self::any())->method('getPrettyVersion')->willReturn('1.3.5');
+        $package->expects(self::any())->method('getSourceReference')->willReturn('aaabbbcccddd');
         $link = $this->createMock(Link::class);
-        $link->expects(static::any())->method('getTarget')->willReturn('some-replaced/package');
-        $link->expects(static::any())->method('getPrettyConstraint')->willReturn('self.version');
-        $package->expects(static::any())->method('getReplaces')->willReturn([$link]);
+        $link->expects(self::any())->method('getTarget')->willReturn('some-replaced/package');
+        $link->expects(self::any())->method('getPrettyConstraint')->willReturn('self.version');
+        $package->expects(self::any())->method('getReplaces')->willReturn([$link]);
 
         return $package;
     }

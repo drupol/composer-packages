@@ -25,7 +25,7 @@ final class Types implements \Countable, \IteratorAggregate
      */
     public function count(): int
     {
-        return count(self::TYPES);
+        return \count(self::TYPES);
     }
 
     /**
@@ -61,8 +61,8 @@ final class Types implements \Countable, \IteratorAggregate
      */
     public function getIterator(): \Generator
     {
-        foreach (array_keys(self::TYPES) as $type) {
-            yield $type => iterator_to_array(self::getPackages(self::TYPES[$type]));
+        foreach (\array_keys(self::TYPES) as $type) {
+            yield $type => \iterator_to_array(self::getPackages(self::TYPES[$type]));
         }
     }
 
