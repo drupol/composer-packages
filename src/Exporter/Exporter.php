@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace drupol\ComposerPackages\Exporter;
 
-use Composer\Config;
-use Composer\Package\AliasPackage;
-use Composer\Package\PackageInterface;
-use Composer\Package\RootPackageInterface;
 use Composer\Script\Event;
 use drupol\ComposerPackages\Twig\CamelCaseExtension;
 use drupol\ComposerPackages\Twig\VarExportExtension;
@@ -47,29 +43,35 @@ abstract class Exporter implements ExporterInterface
     }
 
     /**
-     * @param string $filename
+     * @param string $template
+     * @param string $destination
      *
-     * @throws \ReflectionException
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function exportToFile(string $filename): void
+    public function exportToFile(string $template, string $destination): void
     {
-        $composer = $this->getEvent()->getComposer();
-
         $data = $this->exportToArray() + [
             'generatedAt' => \time(),
             'rootPackageName' => $this->getEvent()->getComposer()->getPackage()->getName(),
         ];
 
-        $installPath = $this->locateRootPackageInstallPath($composer->getConfig(), $composer->getPackage())
-            . '/build/' . (new \ReflectionClass($this))->getShortName() . '.php';
+        $installPathTmp = \sprintf(
+            '%s_%s',
+            $destination,
+            \uniqid('tmp', true)
+        );
 
-        $installPathTmp = $installPath . '_' . \uniqid('tmp', true);
-        \file_put_contents($installPathTmp, $this->twig->render($filename, $data));
+        \file_put_contents(
+            $installPathTmp,
+            $this->twig->render(
+                $template,
+                $data
+            )
+        );
         \chmod($installPathTmp, 0664);
-        \rename($installPathTmp, $installPath);
+        \rename($installPathTmp, $destination);
     }
 
     /**
@@ -78,36 +80,5 @@ abstract class Exporter implements ExporterInterface
     protected function getEvent(): Event
     {
         return $this->event;
-    }
-
-    /**
-     * @param \Composer\Package\RootPackageInterface $rootPackage
-     *
-     * @return \Composer\Package\PackageInterface
-     */
-    private function getRootPackageAlias(RootPackageInterface $rootPackage): PackageInterface
-    {
-        $package = $rootPackage;
-
-        while ($package instanceof AliasPackage) {
-            $package = $package->getAliasOf();
-        }
-
-        return $package;
-    }
-
-    /**
-     * @param \Composer\Config $composerConfig
-     * @param \Composer\Package\RootPackageInterface $rootPackage
-     *
-     * @return string
-     */
-    private function locateRootPackageInstallPath(Config $composerConfig, RootPackageInterface $rootPackage): string
-    {
-        if ('drupol/composer-packages' === $this->getRootPackageAlias($rootPackage)->getName()) {
-            return \dirname($composerConfig->get('vendor-dir'));
-        }
-
-        return $composerConfig->get('vendor-dir') . '/drupol/composer-packages';
     }
 }

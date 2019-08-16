@@ -13,5 +13,5 @@ interface ExporterInterface
 {
     public function exportToArray(): array;
 
-    public function exportToFile(string $filename);
+    public function exportToFile(string $template, string $destination);
 }

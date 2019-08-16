@@ -31,19 +31,34 @@ final class ClassGenerator
 
     /**
      * @throws \ReflectionException
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
      */
     public function regenerateClasses(): void
     {
-        (new Packages($this->event))
-            ->exportToFile('packages.twig');
+        $data = [
+            Packages::class,
+            Types::class,
+            Directories::class,
+        ];
 
-        (new Types($this->event))
-            ->exportToFile('types.twig');
+        foreach ($data as $class) {
+            $reflection = new \ReflectionClass($class);
 
-        (new Directories($this->event))
-            ->exportToFile('directories.twig');
+            $template = \sprintf(
+                '%s.twig',
+                \mb_strtolower($reflection->getShortName())
+            );
+
+            $installPath = \sprintf(
+                '%s/../build/%s.php',
+                __DIR__,
+                $reflection->getShortName()
+            );
+
+            /** @var \drupol\ComposerPackages\Exporter\ExporterInterface $exporter */
+            $exporter = $reflection->newInstance($this->event);
+
+            $exporter
+                ->exportToFile($template, $installPath);
+        }
     }
 }

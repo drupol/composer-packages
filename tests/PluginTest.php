@@ -82,7 +82,7 @@ final class PluginTest extends TestCase
     public function testDumpVersionsClass(): void
     {
         $config = $this->getMockBuilder(Config::class)->disableOriginalConstructor()->getMock();
-        $vendorDir = __DIR__;
+        $vendorDir = __DIR__ . '/../build';
         $config->expects(self::any())->method('get')->with('vendor-dir')->willReturn($vendorDir . '/foo');
 
         $locker = $this->getMockBuilder(Locker::class)->disableOriginalConstructor()->getMock();
@@ -97,7 +97,7 @@ final class PluginTest extends TestCase
             );
 
         $repository = $this->createMock(InstalledRepositoryInterface::class);
-        $expectedPath = $vendorDir . '/build';
+        $expectedPath = \realpath($vendorDir);
 
         if (!\file_exists($expectedPath)) {
             \mkdir($expectedPath, 0777, true);

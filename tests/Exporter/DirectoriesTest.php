@@ -36,7 +36,7 @@ final class DirectoriesTest extends TestCase
         $repositoryManager = $this->createMock(RepositoryManager::class);
         $installationManager = $this->createMock(InstallationManager::class);
 
-        $installationManager->method('getInstallPath')->willReturn(\realpath(__DIR__ . '/../build'));
+        $installationManager->method('getInstallPath')->willReturn(\realpath(__DIR__ . '/../../build'));
 
         $this->composer->setInstallationManager($installationManager);
         $this->composer->setRepositoryManager($repositoryManager);
@@ -68,9 +68,9 @@ final class DirectoriesTest extends TestCase
         );
 
         $test = new Directories($event);
-        $test->exportToFile('directories.twig');
+        $test->exportToFile('directories.twig', __DIR__ . '/../../build/Directories.php');
 
-        self::assertFileExists(__DIR__ . '/../build/Directories.php');
+        self::assertFileExists(__DIR__ . '/../../build/Directories.php');
     }
 
     public function testInstantiation(): void
