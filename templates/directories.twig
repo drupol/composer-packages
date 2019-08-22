@@ -38,11 +38,7 @@ final class Directories implements \Countable, \IteratorAggregate
      */
     public static function get(string $name): ?CompletePackage
     {
-        if (isset(self::DIRECTORIES[$name])) {
-            return self::DIRECTORIES[$name];
-        }
-
-        return null;
+        return self::DIRECTORIES[$name] ?? null;
     }
 
 {% for name, dir in directories %}

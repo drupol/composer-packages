@@ -97,9 +97,7 @@ final class Packages implements \Countable, \IteratorAggregate
      */
     public static function packages(): \Generator
     {
-        foreach (self::PACKAGES as $key => $package) {
-            yield $key => $package;
-        }
+        yield from self::PACKAGES;
     }
 
     /**
