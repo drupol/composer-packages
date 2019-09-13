@@ -21,6 +21,7 @@ use Composer\Script\Event;
 use ComposerPackages\Directories;
 use ComposerPackages\Packages;
 use ComposerPackages\Types;
+use ComposerPackages\Versions;
 use drupol\ComposerPackages\Plugin;
 use drupol\ComposerPackages\Utils\Name;
 use PHPUnit\Framework\TestCase;
@@ -172,9 +173,12 @@ final class PluginTest extends TestCase
 
         include $expectedPath . '/Types.php';
 
+        include $expectedPath . '/Versions.php';
+
         $packages = new Packages();
         $directories = new Directories();
         $types = new Types();
+        $versions = new Versions();
 
         self::assertSame('drupol/composer-packages', \ComposerPackages\Packages::ROOT_PACKAGE_NAME);
         self::assertInstanceOf(PackageInterface::class, \ComposerPackages\Packages::fooBar());
@@ -188,6 +192,10 @@ final class PluginTest extends TestCase
         self::assertCount(4, $directories);
         self::assertIsIterable($directories);
         self::assertSame('bazTab', $directories::bazTab());
+
+        self::assertCount(4, $versions);
+        self::assertIsIterable($versions);
+        self::assertSame('4.5.6', $versions::bazTab());
     }
 
     public function testGetSubscribedEvents(): void

@@ -8,6 +8,7 @@ use Composer\Script\Event;
 use drupol\ComposerPackages\Exporter\Directories;
 use drupol\ComposerPackages\Exporter\Packages;
 use drupol\ComposerPackages\Exporter\Types;
+use drupol\ComposerPackages\Exporter\Versions;
 
 /**
  * Class ClassGenerator.
@@ -38,6 +39,7 @@ final class ClassGenerator
             Packages::class,
             Types::class,
             Directories::class,
+            Versions::class,
         ];
 
         foreach ($data as $class) {
