@@ -15,7 +15,8 @@
 
 Composer Packages is a Composer plugin for getting information about installed packages in your project.
 
-It could be very useful for anyone who wants to build a package discovery system, crawling the filesystem is then not needed.
+It could be very useful for anyone who wants to build a package discovery system, crawling the filesystem is then not
+needed.
 
 ## Documentation
 
@@ -27,8 +28,8 @@ This package provides:
 
 ### How does it work ?
 
-When doing a `composer update` or `composer install`, the plugin will generate classes that are going to be automatically
-loaded by the Composer autoload system.
+When doing a `composer update` or `composer install`, the plugin will generate classes that are going to be
+automatically loaded by the Composer autoload system.
 
 Those classes contains statical information about packages that are installed in your project.
 Among those static data, it also contains some useful methods. The number of methods in those classes can very depending
@@ -52,7 +53,7 @@ from the amazing [Marco Pivetta](https://github.com/Ocramius).
 ```php
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 include './vendor/autoload.php';
 
@@ -74,7 +75,7 @@ $packagesArray = iterator_to_array($packages);
 ```php
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 include './vendor/autoload.php';
 
@@ -102,7 +103,7 @@ foreach (Packages::find($finder) as $package) {
 ```php
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 include './vendor/autoload.php';
 
@@ -129,15 +130,33 @@ available:
 composer require composer/composer
 ```
 
+### To get a package version
+
+```php
+<?php
+
+declare(strict_types=1);
+
+include './vendor/autoload.php';
+
+use ComposerPackages\Versions;
+
+// Use your IDE auto completion to list all the available methods based on your installed packages.
+$version = Versions::symfonyProcess();
+```
+
 ## Code quality and tests
 
-Every time changes are introduced into the library, [Travis CI](https://travis-ci.org/drupol/composer-packages/builds) run the tests and the benchmarks.
+Every time changes are introduced into the library, [Travis CI](https://travis-ci.org/drupol/composer-packages/builds) 
+run the tests and the benchmarks.
 
 The library has tests written with [PHPUnit](http://www.phpunit.de/).
 
-Before each commit some inspections are executed with [GrumPHP](https://github.com/phpro/grumphp), run `./vendor/bin/grumphp run` to trigger them manually.
+Before each commit some inspections are executed with [GrumPHP](https://github.com/phpro/grumphp),
+run `./vendor/bin/grumphp run` to trigger them manually.
 
-[PHPInfection](https://github.com/infection/infection) is used to ensure that your code is properly tested, run `composer infection` to test your code.
+[PHPInfection](https://github.com/infection/infection) is used to ensure that your code is properly tested,
+run `composer infection` to test your code.
 
 ## Contributing
 
