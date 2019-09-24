@@ -18,7 +18,7 @@ final class Directories implements \Countable, \IteratorAggregate
     public const GENERATED_AT = {{ generatedAt }};
     public const ROOT_PACKAGE_NAME = '{{ rootPackageName }}';
 
-    private const DIRECTORIES = {{ directories | export }};
+    private const DIRECTORIES = {{ directories|export }};
 
     /**
      * {@inheridoc}
@@ -48,7 +48,7 @@ final class Directories implements \Countable, \IteratorAggregate
      * @return string
      *   The package installation directory.
      */
-    public static function {{ name | camelize }}(): string
+    public static function {{ name|camelize }}(): string
     {
         return self::DIRECTORIES['{{ name }}'];
     }

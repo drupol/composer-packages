@@ -17,7 +17,7 @@ final class Packages implements \Countable, \IteratorAggregate
 {
     public const ROOT_PACKAGE_NAME = '{{ rootPackageName }}';
     public const GENERATED_AT = {{ generatedAt }};
-    private const PACKAGES = {{ packages | export }};
+    private const PACKAGES = {{ packages|export }};
 
     /**
      * @var Packages
@@ -56,7 +56,7 @@ final class Packages implements \Countable, \IteratorAggregate
      * @return CompletePackage
      *   A Composer package.
      */
-    public static function {{ name | camelize }}(): PackageInterface
+    public static function {{ name|camelize }}(): PackageInterface
     {
         return self::toPackage('{{ name }}');
     }

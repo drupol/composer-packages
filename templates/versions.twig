@@ -17,7 +17,7 @@ final class Versions implements \IteratorAggregate
 {
     public const ROOT_PACKAGE_NAME = '{{ rootPackageName }}';
     public const GENERATED_AT = {{ generatedAt }};
-    private const VERSIONS = {{ versions | export }};
+    private const VERSIONS = {{ versions|export }};
 
     /**
      * @var Versions
@@ -45,7 +45,7 @@ final class Versions implements \IteratorAggregate
      * @return string
      *   The package version.
      */
-    public static function {{ name | camelize }}(): string
+    public static function {{ name|camelize }}(): string
     {
         return '{{ version }}';
     }

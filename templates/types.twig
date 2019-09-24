@@ -18,7 +18,7 @@ final class Types implements \Countable, \IteratorAggregate
     public const GENERATED_AT = {{ generatedAt }};
     public const ROOT_PACKAGE_NAME = '{{ rootPackageName }}';
 
-    private const TYPES = {{ types | export }};
+    private const TYPES = {{ types|export }};
 
     /**
      * {@inheridoc}
@@ -48,7 +48,7 @@ final class Types implements \Countable, \IteratorAggregate
      * @return CompletePackage[]|\Generator
      *   A packages generator.
      */
-    public static function {{ type | camelize }}(): \Generator
+    public static function {{ type|camelize }}(): \Generator
     {
         yield from self::getPackages(self::TYPES['{{ type }}']);
     }
