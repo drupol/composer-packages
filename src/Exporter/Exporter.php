@@ -33,7 +33,7 @@ abstract class Exporter implements ExporterInterface
     public function __construct(Event $event)
     {
         $this->twig = new Environment(
-            new FilesystemLoader(__DIR__ . '/../../templates')
+            new FilesystemLoader(\dirname(__DIR__) . '/templates')
         );
 
         $this->twig->addExtension(new CamelCaseExtension());
