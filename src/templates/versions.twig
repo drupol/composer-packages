@@ -47,7 +47,7 @@ final class Versions implements \IteratorAggregate
      */
     public static function {{ name|camelize }}(): string
     {
-        return '{{ version }}';
+        return self::VERSIONS['{{ name }}'];
     }
 
 {% endfor %}
