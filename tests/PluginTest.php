@@ -18,6 +18,7 @@ use Composer\Package\RootPackageInterface;
 use Composer\Repository\InstalledRepositoryInterface;
 use Composer\Repository\RepositoryManager;
 use Composer\Script\Event;
+use ComposerPackages\Dependencies;
 use ComposerPackages\Directories;
 use ComposerPackages\Packages;
 use ComposerPackages\Types;
@@ -113,6 +114,11 @@ final class PluginTest extends TestCase
                         'name' => 'a/b',
                         'version' => '1.0.0',
                         'type' => 'a',
+                        'require' => [
+                            'drupol/a' => '1.0',
+                            'drupol/b' => '1.0',
+                            'drupol/c' => '1.0',
+                        ],
                     ],
                     [
                         'name' => 'foo/bar',
@@ -179,6 +185,7 @@ final class PluginTest extends TestCase
         $directories = new Directories();
         $types = new Types();
         $versions = new Versions();
+        $dependencies = new Dependencies();
 
         self::assertSame('drupol/composer-packages', \ComposerPackages\Packages::ROOT_PACKAGE_NAME);
         self::assertInstanceOf(PackageInterface::class, \ComposerPackages\Packages::fooBar());
@@ -196,6 +203,8 @@ final class PluginTest extends TestCase
         self::assertCount(4, $versions);
         self::assertIsIterable($versions);
         self::assertSame('4.5.6', $versions::bazTab());
+
+        self::assertCount(3, $dependencies::aB());
     }
 
     public function testGetSubscribedEvents(): void

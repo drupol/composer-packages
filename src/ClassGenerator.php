@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace drupol\ComposerPackages;
 
 use Composer\Script\Event;
+use drupol\ComposerPackages\Exporter\Dependencies;
 use drupol\ComposerPackages\Exporter\Directories;
 use drupol\ComposerPackages\Exporter\Packages;
 use drupol\ComposerPackages\Exporter\Types;
@@ -40,6 +41,7 @@ final class ClassGenerator
             Types::class,
             Directories::class,
             Versions::class,
+            Dependencies::class,
         ];
 
         foreach ($data as $class) {
