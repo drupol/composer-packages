@@ -39,7 +39,7 @@ repository:
     allow_squash_merge: false
     default_branch: master
     description: "Composer Packages is a Composer plugin for getting information about installed packages in your project."
-    topics: Packages discovery,Types discovery,Directories discovery,Composer plugin,Composer helper,Extension
+    topics: packages-discovery,types-discovery,directories-discovery,composer-plugin,composer-packages,composer-helper,extension
     has_downloads: true
     has_issues: true
     has_pages: false
