@@ -25,6 +25,8 @@ This package provides:
 * An easy way to get information about installed packages,
 * An easy way to retrieve packages that has a particular types,
 * An easy way to find the installation directory of a package.
+* An easy way to get any package version.
+* An easy way to get any package dependencies.
 
 ### How does it work ?
 
@@ -66,7 +68,7 @@ foreach ($packages as $package) {
     $package->getName(); // $package is an instance of Composer\Package\PackageInterface
 }
 
-// You can also get an array:
+// You can also get an array
 $packagesArray = iterator_to_array($packages);
 ```
 
@@ -112,6 +114,44 @@ use ComposerPackages\Directories;
 // Use your IDE auto completion to list all the available methods based on your installed packages.
 $directory = Directories::symfonyProcess();
 ```
+
+### To get a package version
+
+```php
+<?php
+
+declare(strict_types=1);
+
+include './vendor/autoload.php';
+
+use ComposerPackages\Versions;
+
+// Use your IDE auto completion to list all the available methods based on your installed packages.
+$version = Versions::symfonyProcess();
+```
+
+### To get a package dependencies
+
+```php
+<?php
+
+declare(strict_types=1);
+
+include './vendor/autoload.php';
+
+use ComposerPackages\Dependencies;
+
+// Use your IDE auto completion to list all the available methods based on your installed packages.
+$dependencies = Dependencies::symfonyDependencyInjection();
+
+foreach ($dependencies as $dependency) {
+    echo $dependency; // $dependency is string, the package name.
+}
+
+// You can also get an array
+$dependenciesArray = iterator_to_array($dependencies);
+```
+
 
 **Note:** If composer is not already installed, you might get an error like
 below when using this package:
