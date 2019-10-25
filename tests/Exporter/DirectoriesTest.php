@@ -85,15 +85,4 @@ final class DirectoriesTest extends TestCase
 
         self::assertInstanceOf(Directories::class, $test);
     }
-
-    public function testMock(): void
-    {
-        $event = new Event(
-            'post-install-cmd',
-            $this->composer,
-            $this->io
-        );
-
-        $mock = $this->createMock(Directories::class);
-    }
 }

@@ -7,25 +7,18 @@ namespace drupol\ComposerPackages;
 use Composer\Script\Event;
 use drupol\ComposerPackages\Exporter\Dependencies;
 use drupol\ComposerPackages\Exporter\Directories;
+use drupol\ComposerPackages\Exporter\ExporterInterface;
 use drupol\ComposerPackages\Exporter\Packages;
 use drupol\ComposerPackages\Exporter\Types;
 use drupol\ComposerPackages\Exporter\Versions;
 
-/**
- * Class ClassGenerator.
- */
 final class ClassGenerator
 {
     /**
-     * @var \Composer\Script\Event
+     * @var Event
      */
     private $event;
 
-    /**
-     * ClassGenerator constructor.
-     *
-     * @param \Composer\Script\Event $event
-     */
     public function __construct(Event $event)
     {
         $this->event = $event;
@@ -58,7 +51,7 @@ final class ClassGenerator
                 $reflection->getShortName()
             );
 
-            /** @var \drupol\ComposerPackages\Exporter\ExporterInterface $exporter */
+            /** @var ExporterInterface $exporter */
             $exporter = $reflection->newInstance($this->event);
 
             $exporter

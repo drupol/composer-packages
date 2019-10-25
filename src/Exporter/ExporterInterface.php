@@ -9,16 +9,7 @@ namespace drupol\ComposerPackages\Exporter;
  */
 interface ExporterInterface
 {
-    /**
-     * @return array
-     */
     public function exportToArray(): array;
 
-    /**
-     * @param string $template
-     * @param string $destination
-     *
-     * @return mixed
-     */
     public function exportToFile(string $template, string $destination);
 }

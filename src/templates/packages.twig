@@ -18,6 +18,15 @@ final class Packages implements \Countable, \IteratorAggregate
     public const ROOT_PACKAGE_NAME = '{{ rootPackageName }}';
     public const GENERATED_AT = {{ generatedAt }};
     private const PACKAGES = {{ packages|export }};
+    private const REGEX_PACKAGES = '#^(?|
+{% for package, bundles in regex %}
+        {{ package }}
+    {% for packageName in bundles %}
+        {{ packageName }}
+    {% endfor %}
+    )|
+{% endfor %}
+    )$#x';
 
     /**
      * @var Packages
@@ -42,8 +51,8 @@ final class Packages implements \Countable, \IteratorAggregate
      */
     public static function get(string $name): ?CompletePackage
     {
-        if (isset(self::PACKAGES[$name])) {
-            return self::toPackage($name);
+        if (preg_match(self::REGEX_PACKAGES, $name, $package)) {
+            return self::toPackage($package['MARK']);
         }
 
         return null;
@@ -56,9 +65,9 @@ final class Packages implements \Countable, \IteratorAggregate
      * @return CompletePackage
      *   A Composer package.
      */
-    public static function {{ name|camelize }}(): PackageInterface
+    public static function {{ name|camelize }}(): ?PackageInterface
     {
-        return self::toPackage('{{ name }}');
+        return self::get('{{ name }}');
     }
 
 {% endfor %}
@@ -127,5 +136,15 @@ final class Packages implements \Countable, \IteratorAggregate
     private static function toPackage(string $package): PackageInterface
     {
         return (new ArrayLoader())->load(self::PACKAGES[$package]);
+    }
+
+    /*
+    * When it comes to check upon packages, you cannot rely on the presence of the static generated method.
+    * You need a proper handling to avoid a non existing method call.
+    * @internal
+    */
+    public static function __callStatic(string $name, $args): ?PackageInterface
+    {
+        return null;
     }
 }

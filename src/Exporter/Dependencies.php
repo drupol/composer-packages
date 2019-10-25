@@ -9,9 +9,6 @@ use Composer\Package\PackageInterface;
 
 class Dependencies extends Exporter
 {
-    /**
-     * @return array
-     */
     public function exportToArray(): array
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
@@ -32,13 +29,11 @@ class Dependencies extends Exporter
             $packageDeps[$packageName] = \array_values($packageDeps[$packageName]);
         }
 
-        return \compact('packageDeps');
+        $regex = $this->buildRegex($packageDeps);
+
+        return \compact('packageDeps', 'regex');
     }
 
-    /**
-     * @param array $carry
-     * @param \Composer\Package\PackageInterface $package
-     */
     protected function getDependenciesOf(array &$carry, PackageInterface $package): void
     {
         foreach (\array_keys($package->getRequires()) as $key) {
@@ -52,5 +47,17 @@ class Dependencies extends Exporter
 
             $carry += [$key => $key];
         }
+    }
+
+    private function buildRegex($packages): array
+    {
+        $groups = [];
+
+        foreach ($packages as $package => $dependencies) {
+            [$prefix, $bundle] = \explode('/', $package);
+            $groups[\sprintf('(?i:%s)(?|', $prefix)][] = \sprintf('/?(?i:%s) (*MARK:%s)|', \str_replace('-', '-?', $bundle), $package);
+        }
+
+        return $groups;
     }
 }

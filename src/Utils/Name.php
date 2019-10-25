@@ -4,16 +4,8 @@ declare(strict_types=1);
 
 namespace drupol\ComposerPackages\Utils;
 
-/**
- * Class Name.
- */
-class Name
+final class Name
 {
-    /**
-     * @param string $str
-     *
-     * @return string
-     */
     public static function camelize(string $str): string
     {
         $str = \preg_replace(

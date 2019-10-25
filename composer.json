@@ -52,6 +52,8 @@
         "post-update-cmd": "drupol\\ComposerPackages\\Plugin::regeneration",
         "grumphp": "./vendor/bin/grumphp run",
         "infection": "./vendor/bin/infection run -j 10",
+        "php-cs-fixer": "./vendor/bin/php-cs-fixer fix --dry-run --diff --ansi",
+        "phpstan": "./vendor/bin/phpstan analyze",
         "phpunit-coverage": "./vendor/bin/phpunit --coverage-clover build/coverage/clover.xml --coverage-html build/coverage/html/",
         "scrutinizer": "./vendor/bin/ocular code-coverage:upload --format=php-clover build/coverage/clover.xml"
     }

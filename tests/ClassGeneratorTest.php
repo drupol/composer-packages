@@ -19,7 +19,9 @@ final class ClassGeneratorTest extends TestCase
 {
     public function testInstantiation(): void
     {
+        /** @var Composer $composer */
         $composer = $this->createMock(Composer::class);
+        /** @var IOInterface $io */
         $io = $this->createMock(IOInterface::class);
 
         $event = new Event(

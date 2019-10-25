@@ -32,7 +32,7 @@ final class Plugin implements EventSubscriberInterface, PluginInterface
     }
 
     /**
-     * @param \Composer\Script\Event $composerEvent
+     * @param Event $composerEvent
      *
      * @throws \ReflectionException
      * @throws \Twig\Error\LoaderError

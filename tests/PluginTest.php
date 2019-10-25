@@ -191,20 +191,31 @@ final class PluginTest extends TestCase
         self::assertInstanceOf(PackageInterface::class, \ComposerPackages\Packages::fooBar());
         self::assertCount(4, $packages);
         self::assertInstanceOf(PackageInterface::class, \ComposerPackages\Packages::get('foo/bar'));
+        self::assertNull($packages::unexistent());
 
-        self::assertCount(4, $types);
+        self::assertCount(8, $types);
+        self::assertIsIterable($types::a());
+        self::assertIsIterable($types::library());
+        self::assertIsIterable($types::application());
+        self::assertIsIterable($types::metapackage());
+        self::assertIsIterable($types::composerPlugin());
+        self::assertIsIterable($types::a());
         self::assertIsIterable($types::a());
         self::assertCount(1, $types::a());
+        self::assertNull($type::unexistent());
 
         self::assertCount(4, $directories);
         self::assertIsIterable($directories);
         self::assertSame('bazTab', $directories::bazTab());
+        self::assertNull($directories::unexistent());
 
         self::assertCount(4, $versions);
         self::assertIsIterable($versions);
         self::assertSame('4.5.6', $versions::bazTab());
+        self::assertNull($versions::unexistent());
 
         self::assertCount(3, $dependencies::aB());
+        self::assertNull($dependencies::unexistent());
     }
 
     public function testGetSubscribedEvents(): void

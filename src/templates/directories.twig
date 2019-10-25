@@ -19,6 +19,15 @@ final class Directories implements \Countable, \IteratorAggregate
     public const ROOT_PACKAGE_NAME = '{{ rootPackageName }}';
 
     private const DIRECTORIES = {{ directories|export }};
+    private const REGEX_DIRECTORIES = '#^(?|
+{% for package, bundles in regex %}
+        {{ package }}
+    {% for packageName in bundles %}
+        {{ packageName }}
+    {% endfor %}
+    )|
+{% endfor %}
+    )$#x';
 
     /**
      * {@inheridoc}
@@ -29,28 +38,32 @@ final class Directories implements \Countable, \IteratorAggregate
     }
 
     /**
-     * Get a package.
+     * Get a directory.
      *
      * @param string $name
      *
-     * @return null|CompletePackage
-     *   A Composer package.
+     * @return null|string
+     *   A Package directory.
      */
-    public static function get(string $name): ?CompletePackage
+    public static function get(string $name): ?string
     {
-        return self::DIRECTORIES[$name] ?? null;
+        if (preg_match(self::REGEX_DIRECTORIES, $name, $directory)) {
+            return self::DIRECTORIES[$directory['MARK']] ?? null;
+        }
+
+        return null;
     }
 
 {% for name, dir in directories %}
     /**
      * Get the package "{{ name }}".
      *
-     * @return string
+     * @return null|strings
      *   The package installation directory.
      */
-    public static function {{ name|camelize }}(): string
+    public static function {{ name|camelize }}(): ?string
     {
-        return self::DIRECTORIES['{{ name }}'];
+        return self::get('{{ name }}');
     }
 
 {% endfor %}
@@ -60,5 +73,15 @@ final class Directories implements \Countable, \IteratorAggregate
     public function getIterator(): \Generator
     {
         yield from self::DIRECTORIES;
+    }
+
+    /*
+     * When it comes to check upon directories, you cannot rely on the presence of the static generated method.
+     * You need a proper handling to avoid a non existing method call.
+     * @internal
+     */
+    public static function __callStatic(string $name, $args): ?string
+    {
+        return null;
     }
 }

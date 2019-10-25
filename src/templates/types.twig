@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ComposerPackages;
 
 use Composer\Package\CompletePackage;
-use Composer\Package\PackageInterface;
 use Composer\Package\Loader\ArrayLoader;
 
 /**
@@ -81,5 +80,15 @@ final class Types implements \Countable, \IteratorAggregate
         foreach ($packages as $package) {
             yield (new ArrayLoader())->load($package);
         }
+    }
+
+    /*
+     * When it comes to check upon custom types, you cannot rely on the presence of the static generated method.
+     * You need a proper handling to avoid a non existing method call.
+     * @internal
+     */
+    public static function __callStatic(string $name, $args): \Generator
+    {
+        yield;
     }
 }
