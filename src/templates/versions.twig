@@ -18,6 +18,15 @@ final class Versions implements \IteratorAggregate
     public const ROOT_PACKAGE_NAME = '{{ rootPackageName }}';
     public const GENERATED_AT = {{ generatedAt }};
     private const VERSIONS = {{ versions|export }};
+    private const REGEX_VERSIONS = '#^(?|
+{% for package, bundles in regex %}
+        {{ package }}
+    {% for bundleVersion in bundles %}
+        {{ bundleVersion }}
+    {% endfor %}
+    )|
+{% endfor %}
+    )$#x';
 
     /**
      * @var Versions
@@ -31,11 +40,12 @@ final class Versions implements \IteratorAggregate
      *   The package name.
      *
      * @return null|string
-     *   The package version or null.
+     *   The package version or null if not found.
      */
     public static function get(string $name): ?string
     {
-        return self::VERSIONS[$name] ?? NULL;
+        preg_match(self::REGEX_VERSIONS, $name, $version);
+        return $version['MARK'] ?? null;
     }
 
 {% for name, version in versions %}
@@ -43,11 +53,11 @@ final class Versions implements \IteratorAggregate
      * Get the package "{{ name }}" version.
      *
      * @return string
-     *   The package version.
+     *   The package version or null if not found.
      */
-    public static function {{ name|camelize }}(): string
+    public static function {{ name|camelize }}(): ?string
     {
-        return self::VERSIONS['{{ name }}'];
+        return self::VERSIONS['{{ name }}'] ?? null;
     }
 
 {% endfor %}
@@ -104,5 +114,15 @@ final class Versions implements \IteratorAggregate
         self::$instance = new self();
 
         return self::$instance;
+    }
+
+    /*
+     * When it comes to check upon versions, you cannot rely on the presence of the static generated method.
+     * You need a proper handling to avoid a non existing method call.
+     * @internal
+     */
+    public static function __callStatic(string $name, $args)
+    {
+        return null;
     }
 }

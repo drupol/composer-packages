@@ -33,7 +33,20 @@ class Versions extends Exporter
         );
 
         $versions = \array_combine($packageNames, $packageVersions);
+        $regex = $this->buildRegex($versions);
 
-        return \compact('versions');
+        return \compact('versions', 'regex');
+    }
+
+    private function buildRegex($versions): array
+    {
+        asort($versions);
+
+        foreach($versions as $package => $version) {
+            [$prefix, $bundle] = explode('/', $package);
+            $groups[sprintf('(?i:%s)(?|', $prefix)][] = sprintf('/?(?i:%s) (*MARK:%s)|', $bundle, $version);
+        }
+
+        return $groups;
     }
 }
