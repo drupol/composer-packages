@@ -28,9 +28,8 @@ use drupol\ComposerPackages\Utils\Name;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers *
- *
  * @internal
+ * @coversNothing
  */
 final class PluginTest extends TestCase
 {
@@ -202,7 +201,7 @@ final class PluginTest extends TestCase
         self::assertIsIterable($types::a());
         self::assertIsIterable($types::a());
         self::assertCount(1, $types::a());
-        self::assertNull($type::unexistent());
+        self::assertCount(0, $types::unexistent());
 
         self::assertCount(4, $directories);
         self::assertIsIterable($directories);
