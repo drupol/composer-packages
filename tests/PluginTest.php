@@ -28,8 +28,8 @@ use drupol\ComposerPackages\Utils\Name;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * @covers *
  * @internal
- * @coversNothing
  */
 final class PluginTest extends TestCase
 {
