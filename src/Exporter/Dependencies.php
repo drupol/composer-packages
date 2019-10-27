@@ -13,7 +13,7 @@ class Dependencies extends Exporter
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
 
-        $packagesData = \array_merge(
+        $packagesData = array_merge(
             $data['packages'],
             $data['packages-dev']
         );
@@ -26,22 +26,22 @@ class Dependencies extends Exporter
             $packageDeps += [$packageName => []];
             $this->getDependenciesOf($packageDeps[$package->getName()], $package);
 
-            $packageDeps[$packageName] = \array_values($packageDeps[$packageName]);
+            $packageDeps[$packageName] = array_values($packageDeps[$packageName]);
         }
 
         $regex = $this->buildRegex($packageDeps);
 
-        return \compact('packageDeps', 'regex');
+        return compact('packageDeps', 'regex');
     }
 
     protected function getDependenciesOf(array &$carry, PackageInterface $package): void
     {
-        foreach (\array_keys($package->getRequires()) as $key) {
+        foreach (array_keys($package->getRequires()) as $key) {
             if ('php' === $key) {
                 continue;
             }
 
-            if (0 === \mb_strpos((string) $key, 'ext-')) {
+            if (0 === mb_strpos((string) $key, 'ext-')) {
                 continue;
             }
 
@@ -54,10 +54,10 @@ class Dependencies extends Exporter
         $groups = [];
 
         foreach ($packages as $package => $dependencies) {
-            [$prefix, $bundle] = \explode('/', $package);
-            $groups[\sprintf('(?i:%s)(?|', $prefix)][] = \sprintf(
+            [$prefix, $bundle] = explode('/', $package);
+            $groups[sprintf('(?i:%s)(?|', $prefix)][] = sprintf(
                 '/?(?i:%s) (*MARK:%s)|',
-                \str_replace('-', '-?', $bundle),
+                str_replace('-', '-?', $bundle),
                 $package
             );
         }
