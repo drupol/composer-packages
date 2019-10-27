@@ -29,6 +29,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers *
+ *
  * @internal
  */
 final class PluginTest extends TestCase
