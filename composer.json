@@ -27,7 +27,7 @@
         "drupol/php-conventions": "^1",
         "infection/infection": "^0.13",
         "phptaskman/changelog": "^1.0",
-        "phpunit/phpunit": "^7 || ^8",
+        "phpunit/phpunit": "^7.5 || ^8",
         "scrutinizer/ocular": "^1"
     },
     "config": {
