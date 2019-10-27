@@ -32,19 +32,27 @@ class Versions extends Exporter
             $packagesData
         );
 
-        $versions = \array_combine($packageNames, $packageVersions);
-        $regex = $this->buildRegex($versions);
+        if (false !== $versions = \array_combine($packageNames, $packageVersions)) {
+            \ksort($versions);
 
-        return \compact('versions', 'regex');
+            $regex = $this->buildRegex($versions);
+        }
+
+        return \compact('packageNames', 'regex');
     }
 
-    private function buildRegex($versions): array
+    /**
+     * @param array $versions
+     *
+     * @return array
+     */
+    private function buildRegex(array $versions): array
     {
-        asort($versions);
+        $groups = [];
 
-        foreach($versions as $package => $version) {
-            [$prefix, $bundle] = explode('/', $package);
-            $groups[sprintf('(?i:%s)(?|', $prefix)][] = sprintf('/?(?i:%s) (*MARK:%s)|', $bundle, $version);
+        foreach ($versions as $package => $version) {
+            [$prefix, $bundle] = \explode('/', $package);
+            $groups[\sprintf('(?i:%s)(?|', $prefix)][] = \sprintf('/?(?i:%s) (*MARK:%s)|', $bundle, $version);
         }
 
         return $groups;

@@ -203,6 +203,7 @@ final class PluginTest extends TestCase
         self::assertCount(4, $versions);
         self::assertIsIterable($versions);
         self::assertSame('4.5.6', $versions::bazTab());
+        self::assertNull($versions::unexistent());
 
         self::assertCount(3, $dependencies::aB());
     }

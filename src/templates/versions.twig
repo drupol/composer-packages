@@ -17,7 +17,7 @@ final class Versions implements \IteratorAggregate
 {
     public const ROOT_PACKAGE_NAME = '{{ rootPackageName }}';
     public const GENERATED_AT = {{ generatedAt }};
-    private const VERSIONS = {{ versions|export }};
+    private const PACKAGES = {{ packageNames|export }};
     private const REGEX_VERSIONS = '#^(?|
 {% for package, bundles in regex %}
         {{ package }}
@@ -48,16 +48,16 @@ final class Versions implements \IteratorAggregate
         return $version['MARK'] ?? null;
     }
 
-{% for name, version in versions %}
+{% for name in packageNames %}
     /**
      * Get the package "{{ name }}" version.
      *
      * @return string
-     *   The package version or null if not found.
+     *   The package version.
      */
-    public static function {{ name|camelize }}(): ?string
+    public static function {{ name|camelize }}(): string
     {
-        return self::VERSIONS['{{ name }}'] ?? null;
+        return self::get('{{ name }}');
     }
 
 {% endfor %}
@@ -84,8 +84,8 @@ final class Versions implements \IteratorAggregate
      */
     public function getIterator(): \Generator
     {
-        foreach (self::VERSIONS as $key => $version) {
-            yield $key => $version;
+        foreach (self::PACKAGES as $key) {
+            yield $key => self::get($key);
         }
     }
 
@@ -96,7 +96,7 @@ final class Versions implements \IteratorAggregate
      */
     public static function versions(): \Generator
     {
-        yield from self::VERSIONS;
+        yield from self::getInstance()->getIterator();
     }
 
     /**
@@ -116,12 +116,12 @@ final class Versions implements \IteratorAggregate
         return self::$instance;
     }
 
-    /*
+    /**
      * When it comes to check upon versions, you cannot rely on the presence of the static generated method.
      * You need a proper handling to avoid a non existing method call.
      * @internal
      */
-    public static function __callStatic(string $name, $args)
+    public static function __callStatic(string $name, $args): ?string
     {
         return null;
     }
