@@ -13,13 +13,11 @@ use Twig\TwigFilter;
 class VarExportExtension extends AbstractExtension
 {
     /**
-     * @param mixed $data
-     *
      * @return string the exported variable
      */
     public function export($data): string
     {
-        return \var_export($data, true);
+        return var_export($data, true);
     }
 
     /**

@@ -12,7 +12,7 @@ class Directories extends Exporter
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
 
-        $packagesData = \array_merge(
+        $packagesData = array_merge(
             $data['packages'],
             $data['packages-dev']
         );
@@ -31,7 +31,7 @@ class Directories extends Exporter
 
         $regex = $this->buildRegex($directories);
 
-        return \compact('directories', 'regex');
+        return compact('directories', 'regex');
     }
 
     private function buildRegex($packages): array
@@ -39,8 +39,8 @@ class Directories extends Exporter
         $groups = [];
 
         foreach ($packages as $package => $directory) {
-            [$prefix, $bundle] = \explode('/', $package);
-            $groups[\sprintf('(?i:%s)(?|', $prefix)][] = \sprintf('/?(?i:%s) (*MARK:%s)|', \str_replace('-', '-?', $bundle), $directory);
+            [$prefix, $bundle] = explode('/', $package);
+            $groups[sprintf('(?i:%s)(?|', $prefix)][] = sprintf('/?(?i:%s) (*MARK:%s)|', str_replace('-', '-?', $bundle), $directory);
         }
 
         return $groups;

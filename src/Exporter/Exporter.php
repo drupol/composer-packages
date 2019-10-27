@@ -28,7 +28,7 @@ abstract class Exporter implements ExporterInterface
     public function __construct(Event $event)
     {
         $this->twig = new Environment(
-            new FilesystemLoader(\dirname(__DIR__) . '/templates')
+            new FilesystemLoader(\dirname(__DIR__).'/templates')
         );
 
         $this->twig->addExtension(new CamelCaseExtension());
@@ -38,9 +38,6 @@ abstract class Exporter implements ExporterInterface
     }
 
     /**
-     * @param string $template
-     * @param string $destination
-     *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
@@ -48,25 +45,25 @@ abstract class Exporter implements ExporterInterface
     public function exportToFile(string $template, string $destination): void
     {
         $data = $this->exportToArray() + [
-            'generatedAt' => \time(),
+            'generatedAt' => time(),
             'rootPackageName' => $this->getEvent()->getComposer()->getPackage()->getName(),
         ];
 
-        $installPathTmp = \sprintf(
+        $installPathTmp = sprintf(
             '%s_%s',
             $destination,
-            \uniqid('tmp', true)
+            uniqid('tmp', true)
         );
 
-        \file_put_contents(
+        file_put_contents(
             $installPathTmp,
             $this->twig->render(
                 $template,
                 $data
             )
         );
-        \chmod($installPathTmp, 0664);
-        \rename($installPathTmp, $destination);
+        chmod($installPathTmp, 0664);
+        rename($installPathTmp, $destination);
     }
 
     protected function getEvent(): Event

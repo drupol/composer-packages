@@ -8,7 +8,7 @@ final class Name
 {
     public static function camelize(string $str): string
     {
-        $str = \preg_replace(
+        $str = preg_replace(
             '/[^a-z0-9]+/i',
             ' ',
             $str
@@ -18,11 +18,11 @@ final class Name
             return '';
         }
 
-        return \lcfirst(
-            \str_replace(
+        return lcfirst(
+            str_replace(
                 ' ',
                 '',
-                \ucwords(
+                ucwords(
                     $str
                 )
             )

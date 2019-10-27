@@ -10,24 +10,24 @@ class Packages extends Exporter
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
 
-        $packagesData = \array_merge(
+        $packagesData = array_merge(
             $data['packages'],
             $data['packages-dev']
         );
 
-        $packageNames = \array_map(
+        $packageNames = array_map(
             static function (array $data) {
                 return $data['name'];
             },
             $packagesData
         );
 
-        if (false !== $packages = \array_combine($packageNames, $packagesData)) {
-            \ksort($packages);
+        if (false !== $packages = array_combine($packageNames, $packagesData)) {
+            ksort($packages);
 
             $regex = $this->buildRegex($packages);
 
-            return \compact('packages', 'regex');
+            return compact('packages', 'regex');
         }
 
         return [];
@@ -38,8 +38,8 @@ class Packages extends Exporter
         $groups = [];
 
         foreach ($packages as $package) {
-            [$prefix, $bundle] = \explode('/', $package['name']);
-            $groups[\sprintf('(?i:%s)(?|', $prefix)][] = \sprintf('/?(?i:%s) (*MARK:%s)|', \str_replace('-', '-?', $bundle), $package['name']);
+            [$prefix, $bundle] = explode('/', $package['name']);
+            $groups[sprintf('(?i:%s)(?|', $prefix)][] = sprintf('/?(?i:%s) (*MARK:%s)|', str_replace('-', '-?', $bundle), $package['name']);
         }
 
         return $groups;
