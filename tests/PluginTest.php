@@ -214,7 +214,8 @@ final class PluginTest extends TestCase
         self::assertNull($versions::unexistent());
 
         self::assertCount(3, $dependencies::aB());
-        self::assertNull($dependencies::unexistent());
+        // I had to use `yield from [];` instead of just `yield;` @see https://github.com/sebastianbergmann/phpunit/pull/3316
+        self::assertCount(0, $dependencies::unexistent());
     }
 
     public function testGetSubscribedEvents(): void

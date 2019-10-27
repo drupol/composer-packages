@@ -79,8 +79,6 @@ final class Dependencies implements \IteratorAggregate
         if (preg_match(self::REGEX_DEPENDENCIES, $packageName, $package)) {
             yield from self::DEPENDENCIES[$package['MARK']];
         }
-
-        yield;
     }
 
     /*
@@ -90,6 +88,6 @@ final class Dependencies implements \IteratorAggregate
      */
     public static function __callStatic(string $name, $args): \Generator
     {
-        yield;
+        yield from [];
     }
 }

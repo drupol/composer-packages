@@ -47,11 +47,8 @@ final class Directories implements \Countable, \IteratorAggregate
      */
     public static function get(string $name): ?string
     {
-        if (preg_match(self::REGEX_DIRECTORIES, $name, $directory)) {
-            return self::DIRECTORIES[$directory['MARK']] ?? null;
-        }
-
-        return null;
+        preg_match(self::REGEX_DIRECTORIES, $name, $directory);
+        return $directory['MARK'] ?? null;
     }
 
 {% for name, dir in directories %}
