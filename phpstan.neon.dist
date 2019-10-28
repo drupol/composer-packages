@@ -1,6 +1,0 @@
-parameters:
-	level: 6
-	paths:
-		- src
-		# - tests # To be uncommented once interfaces has been created.
-	inferPrivatePropertyTypeFromConstructor: true
