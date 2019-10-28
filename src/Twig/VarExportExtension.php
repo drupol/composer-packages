@@ -15,8 +15,7 @@ class VarExportExtension extends AbstractExtension
     /**
      * @param mixed $data
      *
-     * @return string
-     *   The exported variable.
+     * @return string the exported variable
      */
     public function export($data): string
     {

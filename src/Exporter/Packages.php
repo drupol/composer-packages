@@ -6,9 +6,6 @@ namespace drupol\ComposerPackages\Exporter;
 
 class Packages extends Exporter
 {
-    /**
-     * @return array
-     */
     public function exportToArray(): array
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
@@ -25,8 +22,30 @@ class Packages extends Exporter
             $packagesData
         );
 
-        $packages = \array_combine($packageNames, $packagesData);
+        if (false !== $packages = \array_combine($packageNames, $packagesData)) {
+            \ksort($packages);
 
-        return \compact('packages');
+            $regex = $this->buildRegex($packages);
+
+            return \compact('packages', 'regex');
+        }
+
+        return [];
+    }
+
+    private function buildRegex($packages): array
+    {
+        $groups = [];
+
+        foreach ($packages as $package) {
+            [$prefix, $bundle] = \explode('/', $package['name']);
+            $groups[\sprintf('(?i:%s)(?|', $prefix)][] = \sprintf(
+                '/?(?i:%s) (*MARK:%s)|',
+                \str_replace('-', '-?', $bundle),
+                $package['name']
+            );
+        }
+
+        return $groups;
     }
 }

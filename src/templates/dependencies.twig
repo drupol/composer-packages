@@ -19,18 +19,25 @@ final class Dependencies implements \IteratorAggregate
     public const ROOT_PACKAGE_NAME = '{{ rootPackageName }}';
 
     private const DEPENDENCIES = {{ packageDeps|export }};
+    private const REGEX_DEPENDENCIES = '#^(?|
+{% for package, bundles in regex %}
+        {{ package }}
+    {% for packageName in bundles %}
+        {{ packageName }}
+    {% endfor %}
+    )|
+{% endfor %}
+    )$#x';
 
     /**
      * @param string $type
      *
-     * @return CompletePackage[]|\Generator
-     *   A packages generator.
+     * @return string[]|\Generator
+     *   The package dependencies.
      */
-    public static function get(string $type): \Generator
+    public static function get(string $name): \Generator
     {
-        if (isset(self::DEPENDENCIES[$type])) {
-            yield from self::getDependencies($type);
-        }
+        yield from self::getDependencies($name);
     }
 
 {% for type, data in packageDeps %}
@@ -53,8 +60,8 @@ final class Dependencies implements \IteratorAggregate
      */
     public function getIterator(): \Generator
     {
-        foreach (\array_keys(self::DEPENDENCIES) as $type) {
-            yield $type => \iterator_to_array(self::getDependencies(self::DEPENDENCIES[$type]));
+        foreach (\array_keys(self::DEPENDENCIES) as $name) {
+            yield $name => \iterator_to_array(self::getDependencies(self::DEPENDENCIES[$name]));
         }
     }
 
@@ -69,6 +76,18 @@ final class Dependencies implements \IteratorAggregate
      */
     private static function getDependencies(string $packageName): \Generator
     {
-        yield from self::DEPENDENCIES[$packageName];
+        if (preg_match(self::REGEX_DEPENDENCIES, $packageName, $package)) {
+            yield from self::DEPENDENCIES[$package['MARK']];
+        }
+    }
+
+    /*
+     * When it comes to check upon custom dependencies, you cannot rely on the presence of the static generated method.
+     * You need a proper handling to avoid a non existing method call.
+     * @internal
+     */
+    public static function __callStatic(string $name, $args): \Generator
+    {
+        yield from [];
     }
 }

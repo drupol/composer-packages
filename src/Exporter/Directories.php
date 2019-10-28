@@ -8,9 +8,6 @@ use Composer\Package\Loader\ArrayLoader;
 
 class Directories extends Exporter
 {
-    /**
-     * @return array
-     */
     public function exportToArray(): array
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
@@ -19,6 +16,8 @@ class Directories extends Exporter
             $data['packages'],
             $data['packages-dev']
         );
+
+        $directories = [];
 
         foreach ($packagesData as $package) {
             $package = (new ArrayLoader())->load($package);
@@ -30,6 +29,24 @@ class Directories extends Exporter
                 ->getInstallPath($package);
         }
 
-        return \compact('directories');
+        $regex = $this->buildRegex($directories);
+
+        return \compact('directories', 'regex');
+    }
+
+    private function buildRegex($packages): array
+    {
+        $groups = [];
+
+        foreach ($packages as $package => $directory) {
+            [$prefix, $bundle] = \explode('/', $package);
+            $groups[\sprintf('(?i:%s)(?|', $prefix)][] = \sprintf(
+                '/?(?i:%s) (*MARK:%s)|',
+                \str_replace('-', '-?', $bundle),
+                $directory
+            );
+        }
+
+        return $groups;
     }
 }

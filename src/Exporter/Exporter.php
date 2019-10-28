@@ -16,20 +16,15 @@ use Twig\Loader\FilesystemLoader;
 abstract class Exporter implements ExporterInterface
 {
     /**
-     * @var \Composer\Script\Event
+     * @var Event
      */
     private $event;
 
     /**
-     * @var \Twig\Environment
+     * @var Environment
      */
     private $twig;
 
-    /**
-     * Exporter constructor.
-     *
-     * @param \Composer\Script\Event $event
-     */
     public function __construct(Event $event)
     {
         $this->twig = new Environment(
@@ -74,9 +69,6 @@ abstract class Exporter implements ExporterInterface
         \rename($installPathTmp, $destination);
     }
 
-    /**
-     * @return \Composer\Script\Event
-     */
     protected function getEvent(): Event
     {
         return $this->event;

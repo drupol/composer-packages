@@ -6,9 +6,6 @@ namespace drupol\ComposerPackages\Exporter;
 
 class Versions extends Exporter
 {
-    /**
-     * @return array
-     */
     public function exportToArray(): array
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
@@ -32,8 +29,26 @@ class Versions extends Exporter
             $packagesData
         );
 
-        $versions = \array_combine($packageNames, $packageVersions);
+        if (false !== $versions = \array_combine($packageNames, $packageVersions)) {
+            \ksort($versions);
 
-        return \compact('versions');
+            $regex = $this->buildRegex($versions);
+
+            return \compact('packageNames', 'regex');
+        }
+
+        return [];
+    }
+
+    private function buildRegex($versions): array
+    {
+        $groups = [];
+
+        foreach ($versions as $package => $version) {
+            [$prefix, $bundle] = \explode('/', $package);
+            $groups[\sprintf('(?i:%s)(?|', $prefix)][] = \sprintf('/?(?i:%s) (*MARK:%s)|', $bundle, $version);
+        }
+
+        return $groups;
     }
 }

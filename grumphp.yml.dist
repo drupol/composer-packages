@@ -23,4 +23,3 @@ parameters:
       min_covered_msi: 50
       metadata:
         priority: 2000
-

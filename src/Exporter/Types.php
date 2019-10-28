@@ -6,9 +6,6 @@ namespace drupol\ComposerPackages\Exporter;
 
 class Types extends Exporter
 {
-    /**
-     * @return array
-     */
     public function exportToArray(): array
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
@@ -18,11 +15,15 @@ class Types extends Exporter
             $data['packages-dev']
         );
 
-        $types = [];
+        // out of the box composer supported types.
+        $types = [
+            'library' => [],
+            'project' => [],
+            'metapackage' => [],
+            'composer-plugin' => [],
+        ];
 
         foreach ($packagesData as $package) {
-            $types += [$package['type'] => []];
-
             $types[$package['type']][] = $package;
         }
 
