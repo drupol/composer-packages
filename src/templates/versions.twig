@@ -15,8 +15,9 @@ use Composer\Package\Loader\ArrayLoader;
  */
 final class Versions implements \IteratorAggregate
 {
-    public const ROOT_PACKAGE_NAME = '{{ rootPackageName }}';
     public const GENERATED_AT = {{ generatedAt }};
+    public const ROOT_PACKAGE_NAME = '{{ rootPackageName }}';
+
     private const PACKAGES = {{ packageNames|export }};
     private const REGEX_VERSIONS = '#^(?|
 {% for package, bundles in regex %}
@@ -116,9 +117,10 @@ final class Versions implements \IteratorAggregate
         return self::$instance;
     }
 
-    /*
+    /**
      * When it comes to check upon versions, you cannot rely on the presence of the static generated method.
      * You need a proper handling to avoid a non existing method call.
+     *
      * @internal
      */
     public static function __callStatic(string $name, $args): ?string

@@ -40,7 +40,7 @@ class Versions extends Exporter
         return [];
     }
 
-    private function buildRegex($versions): array
+    private function buildRegex(array $versions): array
     {
         $groups = [];
 

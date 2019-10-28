@@ -35,12 +35,14 @@ final class Plugin implements EventSubscriberInterface, PluginInterface
      * @param Event $composerEvent
      *
      * @throws \ReflectionException
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
      */
     public static function regeneration(Event $composerEvent): void
     {
+        // This is to prevent issue when removing the package with composer.
+        if (false === \class_exists(ClassGenerator::class)) {
+            return;
+        }
+
         $composerEvent->getIO()->write('<info>drupol/composer-packages:</info> Regenerating classes...');
 
         (new ClassGenerator($composerEvent))->regenerateClasses();

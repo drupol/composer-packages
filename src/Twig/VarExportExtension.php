@@ -10,12 +10,13 @@ use Twig\TwigFilter;
 /**
  * Class CamelCaseExtension.
  */
-class VarExportExtension extends AbstractExtension
+final class VarExportExtension extends AbstractExtension
 {
     /**
      * @param mixed $data
      *
-     * @return string the exported variable
+     * @return string
+     *   The exported variable.
      */
     public function export($data): string
     {

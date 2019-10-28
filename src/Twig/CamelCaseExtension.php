@@ -11,7 +11,7 @@ use Twig\TwigFilter;
 /**
  * Class CamelCaseExtension.
  */
-class CamelCaseExtension extends AbstractExtension
+final class CamelCaseExtension extends AbstractExtension
 {
     /**
      * Returns a list of filters to add to the existing list.

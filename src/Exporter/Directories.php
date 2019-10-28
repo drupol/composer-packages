@@ -34,7 +34,7 @@ class Directories extends Exporter
         return \compact('directories', 'regex');
     }
 
-    private function buildRegex($packages): array
+    private function buildRegex(array $packages): array
     {
         $groups = [];
 

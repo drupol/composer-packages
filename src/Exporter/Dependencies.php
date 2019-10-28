@@ -49,7 +49,7 @@ class Dependencies extends Exporter
         }
     }
 
-    private function buildRegex($packages): array
+    private function buildRegex(array $packages): array
     {
         $groups = [];
 
