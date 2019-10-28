@@ -48,25 +48,25 @@ abstract class Exporter implements ExporterInterface
     public function exportToFile(string $template, string $destination): void
     {
         $data = $this->exportToArray() + [
-            'generatedAt' => time(),
+            'generatedAt' => \time(),
             'rootPackageName' => $this->getEvent()->getComposer()->getPackage()->getName(),
         ];
 
-        $installPathTmp = sprintf(
+        $installPathTmp = \sprintf(
             '%s_%s',
             $destination,
-            uniqid('tmp', true)
+            \uniqid('tmp', true)
         );
 
-        file_put_contents(
+        \file_put_contents(
             $installPathTmp,
             $this->twig->render(
                 $template,
                 $data
             )
         );
-        chmod($installPathTmp, 0664);
-        rename($installPathTmp, $destination);
+        \chmod($installPathTmp, 0664);
+        \rename($installPathTmp, $destination);
     }
 
     protected function getEvent(): Event

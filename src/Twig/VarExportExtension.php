@@ -19,7 +19,7 @@ class VarExportExtension extends AbstractExtension
      */
     public function export($data): string
     {
-        return var_export($data, true);
+        return \var_export($data, true);
     }
 
     /**
