@@ -23,9 +23,20 @@ use ComposerPackages\Directories;
 use ComposerPackages\Packages;
 use ComposerPackages\Types;
 use ComposerPackages\Versions;
+use drupol\ComposerPackages\Commands\PackagesType;
+use drupol\ComposerPackages\Commands\ReverseDependencies;
 use drupol\ComposerPackages\Plugin;
 use drupol\ComposerPackages\Utils\Name;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @covers *
@@ -68,11 +79,11 @@ final class PluginTest extends TestCase
             new JsonFile(__DIR__ . '/../composer.lock'),
             $repositoryManager,
             $installationManager,
-            \file_get_contents(__DIR__ . '/../composer.json')
+            file_get_contents(__DIR__ . '/../composer.json')
         );
 
         $rootPackage = new RootPackage('drupol/composer-packages', '1', '1.0.0');
-        $config = new Config(false, \realpath(__DIR__ . '/../'));
+        $config = new Config(false, realpath(__DIR__ . '/../'));
 
         $this->composer->method('getEventDispatcher')->willReturn($this->eventDispatcher);
         $this->composer->method('getInstallationManager')->willReturn($installationManager);
@@ -99,10 +110,10 @@ final class PluginTest extends TestCase
             );
 
         $repository = $this->createMock(InstalledRepositoryInterface::class);
-        $expectedPath = \realpath($vendorDir);
+        $expectedPath = realpath($vendorDir);
 
-        if (!\file_exists($expectedPath)) {
-            \mkdir($expectedPath, 0777, true);
+        if (!file_exists($expectedPath)) {
+            mkdir($expectedPath, 0777, true);
         }
 
         $locker
@@ -118,6 +129,14 @@ final class PluginTest extends TestCase
                             'drupol/a' => '1.0',
                             'drupol/b' => '1.0',
                             'drupol/c' => '1.0',
+                        ],
+                    ],
+                    [
+                        'name' => 'drupol/b',
+                        'version' => '1.1.0',
+                        'type' => 's',
+                        'require' => [
+                            'drupol/s/a' => '1.0',
                         ],
                     ],
                     [
@@ -189,11 +208,11 @@ final class PluginTest extends TestCase
 
         self::assertSame('drupol/composer-packages', \ComposerPackages\Packages::ROOT_PACKAGE_NAME);
         self::assertInstanceOf(PackageInterface::class, \ComposerPackages\Packages::fooBar());
-        self::assertCount(4, $packages);
+        self::assertCount(5, $packages);
         self::assertInstanceOf(PackageInterface::class, \ComposerPackages\Packages::get('foo/bar'));
         self::assertNull($packages::unexistent());
 
-        self::assertCount(8, $types);
+        self::assertCount(9, $types);
         self::assertIsIterable($types::a());
         self::assertIsIterable($types::library());
         self::assertIsIterable($types::application());
@@ -204,12 +223,12 @@ final class PluginTest extends TestCase
         self::assertCount(1, $types::a());
         self::assertCount(0, $types::unexistent());
 
-        self::assertCount(4, $directories);
+        self::assertCount(5, $directories);
         self::assertIsIterable($directories);
         self::assertSame('bazTab', $directories::bazTab());
         self::assertNull($directories::unexistent());
 
-        self::assertCount(4, $versions);
+        self::assertCount(5, $versions);
         self::assertIsIterable($versions);
         self::assertSame('4.5.6', $versions::bazTab());
         self::assertNull($versions::unexistent());
@@ -217,6 +236,118 @@ final class PluginTest extends TestCase
         self::assertCount(3, $dependencies::aB());
         // I had to use `yield from [];` instead of just `yield;` @see https://github.com/sebastianbergmann/phpunit/pull/3316
         self::assertCount(0, $dependencies::unexistent());
+    }
+
+    public function testGetDependencies(): void
+    {
+        $command = $this->createCommandDependencies();
+
+        $dialogProphecy = $this->prophesize(QuestionHelper::class);
+        $dialogProphecy->ask(Argument::type(InputInterface::class), Argument::type(OutputInterface::class), Argument::type(Question::class))->willReturn('a/b');
+        $dialogProphecy->getName()->willReturn('question');
+        $dialogProphecy->setHelperSet(Argument::type(HelperSet::class))->shouldBeCalled();
+
+        $command->getHelperSet()->set($dialogProphecy->reveal(), 'question');
+
+        $commandTester = new CommandTester($command);
+
+        $commandTester->execute([]);
+        self::assertStringContainsString(<<<'OUTPUT'
+.
+│
+└── a/b: 1.0.0
+    ├── drupol/a: ~
+    ├── drupol/b: 1.1.0
+    └── drupol/c: ~
+OUTPUT
+            , trim($commandTester->getDisplay()));
+    }
+
+    public function testGetDependenciesRecursively(): void
+    {
+        $command = $this->createCommandDependencies();
+
+        $dialogProphecy = $this->prophesize(QuestionHelper::class);
+        $dialogProphecy->ask(Argument::type(InputInterface::class), Argument::type(OutputInterface::class), Argument::type(Question::class))->willReturn('a/b');
+        $dialogProphecy->getName()->willReturn('question');
+        $dialogProphecy->setHelperSet(Argument::type(HelperSet::class))->shouldBeCalled();
+
+        $command->getHelperSet()->set($dialogProphecy->reveal(), 'question');
+
+        $commandTester = new CommandTester($command);
+
+        $commandTester->execute(['--recursive' => true]);
+        self::assertStringContainsString(<<<'OUTPUT'
+.
+│
+└── a/b: 1.0.0
+    ├── drupol/a: ~
+    ├── drupol/b: 1.1.0
+    │   └── drupol/s/a: ~
+    └── drupol/c: ~
+OUTPUT
+            , trim($commandTester->getDisplay()));
+    }
+
+    public function testGetPackgesType(): void
+    {
+        $command = $this->createCommandPackagesTypes();
+
+        $dialogProphecy = $this->prophesize(QuestionHelper::class);
+        $dialogProphecy->ask(Argument::type(InputInterface::class), Argument::type(OutputInterface::class), Argument::type(Question::class))->willReturn('a', 'a/b');
+        $dialogProphecy->getName()->willReturn('question');
+        $dialogProphecy->setHelperSet(Argument::type(HelperSet::class))->shouldBeCalled();
+
+        $command->getHelperSet()->set($dialogProphecy->reveal(), 'question');
+
+        $commandTester = new CommandTester($command);
+
+        $commandTester->execute([]);
+        self::assertStringContainsString(<<<'OUTPUT'
+a/b
+name     :a/b
+descrip. :
+keywords :~
+version  :1.0.0.0
+type     :a
+license  :
+source   :[]  
+dist     :[]  
+
+requires
+drupol/a 1.0
+drupol/b 1.0
+drupol/c 1.0
+
+requires-dev
+
+suggest
+OUTPUT
+            , trim($commandTester->getDisplay()));
+    }
+
+    public function testGetReverseDependencies(): void
+    {
+        $command = $this->createCommandReverseDependencies();
+
+        $dialogProphecy = $this->prophesize(QuestionHelper::class);
+        $dialogProphecy->ask(Argument::type(InputInterface::class), Argument::type(OutputInterface::class), Argument::type(Question::class))->willReturn('drupol/s/a');
+        $dialogProphecy->getName()->willReturn('question');
+        $dialogProphecy->setHelperSet(Argument::type(HelperSet::class))->shouldBeCalled();
+
+        $command->getHelperSet()->set($dialogProphecy->reveal(), 'question');
+
+        $commandTester = new CommandTester($command);
+
+        $commandTester->execute([]);
+        self::assertStringContainsString(<<<'OUTPUT'
+.
+│
+└── a/b
+    └── drupol/b
+        └── drupol/s/a
+OUTPUT
+            , trim($commandTester->getDisplay()));
     }
 
     public function testGetSubscribedEvents(): void
@@ -254,6 +385,30 @@ final class PluginTest extends TestCase
         self::assertFileExists(__DIR__ . '/../build/Directories.php');
         self::assertFileExists(__DIR__ . '/../build/Packages.php');
         self::assertFileExists(__DIR__ . '/../build/Types.php');
+    }
+
+    private function createCommandDependencies(): Command
+    {
+        $application = new Application();
+        $application->add(new \drupol\ComposerPackages\Commands\Dependencies());
+
+        return $application->find('dependencies');
+    }
+
+    private function createCommandPackagesTypes(): Command
+    {
+        $application = new Application();
+        $application->add(new PackagesType());
+
+        return $application->find('packages-type');
+    }
+
+    private function createCommandReverseDependencies(): Command
+    {
+        $application = new Application();
+        $application->add(new ReverseDependencies());
+
+        return $application->find('reverse-dependencies');
     }
 
     private function getRootPackageMock(): RootPackageInterface

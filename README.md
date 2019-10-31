@@ -50,6 +50,46 @@ from the amazing [Marco Pivetta](https://github.com/Ocramius).
 
 ## Usage
 
+### Composer command
+
+#### Get the dependencies
+
+```shell
+$ composer dependencies [-r|--recursive]
+Please type the package name:
+twig/twig
+
+.
+│
+└── twig/twig: v2.12.1
+    ├── symfony/polyfill-ctype: v1.12.0
+    └── symfony/polyfill-mbstring: v1.12.0
+```
+
+#### Get the parent dependencies
+
+```shell
+$ composer reverse-dependencies
+Please type the package name:
+twig/twig
+.
+│
+└── drupol/php-conventions
+    └── twig/twig
+```
+
+#### Get the dependencies of a type
+
+```shell
+$ composer packages-type
+Please provide type of packages:
+composer-plugin
+
+ocramius/package-versions
+phpro/grumphp
+phpstan/extension-installer
+```
+
 ### To get packages of a particular type
 
 ```php
@@ -187,7 +227,7 @@ $version = Versions::symfonyProcess();
 
 ## Code quality and tests
 
-Every time changes are introduced into the library, [Travis CI](https://travis-ci.org/drupol/composer-packages/builds) 
+Every time changes are introduced into the library, [Travis CI](https://travis-ci.org/drupol/composer-packages/builds)
 run the tests and the benchmarks.
 
 The library has tests written with [PHPUnit](http://www.phpunit.de/).

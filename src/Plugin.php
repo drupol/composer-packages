@@ -7,6 +7,7 @@ namespace drupol\ComposerPackages;
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
+use Composer\Plugin\Capable;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
@@ -14,13 +15,23 @@ use Composer\Script\ScriptEvents;
 /**
  * Class Plugin.
  */
-final class Plugin implements EventSubscriberInterface, PluginInterface
+final class Plugin implements Capable, EventSubscriberInterface, PluginInterface
 {
     /**
      * {@inheritdoc}
      */
     public function activate(Composer $composer, IOInterface $io): void
     {
+    }
+
+    /**
+     * @return array
+     */
+    public function getCapabilities(): array
+    {
+        return [
+            \Composer\Plugin\Capability\CommandProvider::class => CommandProvider::class,
+        ];
     }
 
     /**
@@ -39,7 +50,7 @@ final class Plugin implements EventSubscriberInterface, PluginInterface
     public static function regeneration(Event $composerEvent): void
     {
         // This is to prevent issue when removing the package with composer.
-        if (false === \class_exists(ClassGenerator::class)) {
+        if (false === class_exists(ClassGenerator::class)) {
             return;
         }
 

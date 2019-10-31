@@ -76,9 +76,8 @@ final class Dependencies implements \IteratorAggregate
      */
     private static function getDependencies(string $packageName): Generator
     {
-        if (preg_match(self::REGEX_DEPENDENCIES, $packageName, $package)) {
-            yield from self::DEPENDENCIES[$package['MARK']];
-        }
+        preg_match(self::REGEX_DEPENDENCIES, $packageName, $package);
+        yield from self::DEPENDENCIES[$package['MARK'] ?? ''] ?? [];
     }
 
     /**

@@ -29,6 +29,15 @@ final class Types implements \Countable, \IteratorAggregate
     }
 
     /**
+     * @return array
+     *   Return the found types.
+     */
+    public static function getTypes()
+    {
+        return \array_keys(self::TYPES);
+    }
+
+    /**
      * @param string $type
      *
      * @return CompletePackage[]|Generator

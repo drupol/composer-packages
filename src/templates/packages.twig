@@ -54,7 +54,7 @@ final class Packages implements \Countable, \IteratorAggregate
     public static function get(string $name): ?CompletePackage
     {
         if (false !== preg_match(self::REGEX_PACKAGES, $name, $package)) {
-            return self::toPackage($package['MARK']);
+            return self::toPackage($package['MARK'] ?? '');
         }
 
         return null;
@@ -135,9 +135,13 @@ final class Packages implements \Countable, \IteratorAggregate
      * @return CompletePackage|PackageInterface
      *   A Composer package.
      */
-    private static function toPackage(string $package): PackageInterface
+    private static function toPackage(string $package): ?PackageInterface
     {
-        return (new ArrayLoader())->load(self::PACKAGES[$package]);
+        if (!empty(self::PACKAGES[$package])) {
+            return (new ArrayLoader())->load(self::PACKAGES[$package]);
+        }
+
+        return null;
     }
 
     /**
