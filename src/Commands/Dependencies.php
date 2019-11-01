@@ -44,7 +44,10 @@ class Dependencies extends Command
             $question->setAutocompleterValues($packages);
         }
 
-        $rows = $this->getDependenciesOf($helper->ask($input, $output, $question) ?? '', (bool) $input->getOption('recursive'));
+        $rows = $this->getDependenciesOf(
+            $helper->ask($input, $output, $question) ?? '',
+            (bool) $input->getOption('recursive')
+        );
 
         $tree->addArray($rows);
         $tree->printTree($output);

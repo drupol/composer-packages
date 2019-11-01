@@ -79,8 +79,14 @@ class PackagesType extends Command
         $output->writeln('<fg=green>version </> :' . $package->getVersion() ?? '~');
         $output->writeln('<fg=green>type    </> :' . $package->getType());
         $output->writeln('<fg=green>license </> :' . implode(' ', $package->getLicense() ?? ['~']));
-        $output->writeln('<fg=green>source  </> :[' . $package->getSourceType() . '] ' . $package->getSourceUrl() . ' ' . $package->getSourceReference());
-        $output->writeln('<fg=green>dist    </> :[' . $package->getDistType() . '] ' . $package->getDistUrl() . ' ' . $package->getDistReference());
+        $output->writeln(
+            '<fg=green>source  </> :[' . $package->getSourceType() . '] ' .
+                        $package->getSourceUrl() . ' ' . $package->getSourceReference()
+        );
+        $output->writeln(
+            '<fg=green>dist    </> :[' . $package->getDistType() . '] ' .
+                    $package->getDistUrl() . ' ' . $package->getDistReference()
+        );
 
         $output->writeln('');
         $output->writeln('<fg=green>requires</>');
