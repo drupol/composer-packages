@@ -34,16 +34,24 @@ use PHPUnit\Framework\TestCase;
  */
 final class PluginTest extends TestCase
 {
-    /** @var \Composer\Composer */
+    /**
+     * @var \Composer\Composer
+     */
     private $composer;
 
-    /** @var \Composer\EventDispatcher\EventDispatcher */
+    /**
+     * @var \Composer\EventDispatcher\EventDispatcher
+     */
     private $eventDispatcher;
 
-    /** @var \Composer\IO\IOInterface */
+    /**
+     * @var \Composer\IO\IOInterface
+     */
     private $io;
 
-    /** @var Plugin */
+    /**
+     * @var Plugin
+     */
     private $plugin;
 
     protected function setUp(): void
@@ -68,11 +76,11 @@ final class PluginTest extends TestCase
             new JsonFile(__DIR__ . '/../composer.lock'),
             $repositoryManager,
             $installationManager,
-            \file_get_contents(__DIR__ . '/../composer.json')
+            file_get_contents(__DIR__ . '/../composer.json')
         );
 
         $rootPackage = new RootPackage('drupol/composer-packages', '1', '1.0.0');
-        $config = new Config(false, \realpath(__DIR__ . '/../'));
+        $config = new Config(false, realpath(__DIR__ . '/../'));
 
         $this->composer->method('getEventDispatcher')->willReturn($this->eventDispatcher);
         $this->composer->method('getInstallationManager')->willReturn($installationManager);
@@ -99,10 +107,10 @@ final class PluginTest extends TestCase
             );
 
         $repository = $this->createMock(InstalledRepositoryInterface::class);
-        $expectedPath = \realpath($vendorDir);
+        $expectedPath = realpath($vendorDir);
 
-        if (!\file_exists($expectedPath)) {
-            \mkdir($expectedPath, 0777, true);
+        if (!file_exists($expectedPath)) {
+            mkdir($expectedPath, 0777, true);
         }
 
         $locker

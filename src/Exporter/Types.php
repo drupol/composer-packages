@@ -10,7 +10,7 @@ class Types extends Exporter
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
 
-        $packagesData = \array_merge(
+        $packagesData = array_merge(
             $data['packages'],
             $data['packages-dev']
         );
@@ -27,6 +27,6 @@ class Types extends Exporter
             $types[$package['type']][] = $package;
         }
 
-        return \compact('types');
+        return compact('types');
     }
 }

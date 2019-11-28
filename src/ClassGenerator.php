@@ -11,6 +11,8 @@ use drupol\ComposerPackages\Exporter\ExporterInterface;
 use drupol\ComposerPackages\Exporter\Packages;
 use drupol\ComposerPackages\Exporter\Types;
 use drupol\ComposerPackages\Exporter\Versions;
+use ReflectionClass;
+use ReflectionException;
 
 final class ClassGenerator
 {
@@ -25,7 +27,7 @@ final class ClassGenerator
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function regenerateClasses(): void
     {
@@ -38,14 +40,14 @@ final class ClassGenerator
         ];
 
         foreach ($data as $class) {
-            $reflection = new \ReflectionClass($class);
+            $reflection = new ReflectionClass($class);
 
-            $template = \sprintf(
+            $template = sprintf(
                 '%s.twig',
-                \mb_strtolower($reflection->getShortName())
+                mb_strtolower($reflection->getShortName())
             );
 
-            $installPath = \sprintf(
+            $installPath = sprintf(
                 '%s/../build/%s.php',
                 __DIR__,
                 $reflection->getShortName()

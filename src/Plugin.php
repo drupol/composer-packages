@@ -10,6 +10,7 @@ use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
+use ReflectionException;
 
 /**
  * Class Plugin.
@@ -34,12 +35,12 @@ final class Plugin implements EventSubscriberInterface, PluginInterface
     /**
      * @param Event $composerEvent
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public static function regeneration(Event $composerEvent): void
     {
         // This is to prevent issue when removing the package with composer.
-        if (false === \class_exists(ClassGenerator::class)) {
+        if (false === class_exists(ClassGenerator::class)) {
             return;
         }
 
