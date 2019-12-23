@@ -25,7 +25,7 @@ final class Plugin implements EventSubscriberInterface, PluginInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return array<string, string>
      */
     public static function getSubscribedEvents(): array
     {

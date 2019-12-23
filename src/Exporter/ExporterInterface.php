@@ -12,7 +12,7 @@ interface ExporterInterface
     /**
      * Export the data into an array.
      *
-     * @return array
+     * @return array<string>
      */
     public function exportToArray(): array;
 

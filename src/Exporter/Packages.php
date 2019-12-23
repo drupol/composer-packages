@@ -6,6 +6,9 @@ namespace drupol\ComposerPackages\Exporter;
 
 class Packages extends Exporter
 {
+    /**
+     * {@inheritdoc}
+     */
     public function exportToArray(): array
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
@@ -33,6 +36,11 @@ class Packages extends Exporter
         return [];
     }
 
+    /**
+     * @param array<string, array> $packages
+     *
+     * @return array<string, array<int, string>>
+     */
     private function buildRegex(array $packages): array
     {
         $groups = [];

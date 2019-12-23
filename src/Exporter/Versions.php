@@ -6,6 +6,9 @@ namespace drupol\ComposerPackages\Exporter;
 
 class Versions extends Exporter
 {
+    /**
+     * {@inheritdoc}
+     */
     public function exportToArray(): array
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
@@ -40,6 +43,11 @@ class Versions extends Exporter
         return [];
     }
 
+    /**
+     * @param array<string, string> $versions
+     *
+     * @return array<string, array<int, string>>
+     */
     private function buildRegex(array $versions): array
     {
         $groups = [];

@@ -8,6 +8,9 @@ use Composer\Package\Loader\ArrayLoader;
 
 class Directories extends Exporter
 {
+    /**
+     * {@inheritdoc}
+     */
     public function exportToArray(): array
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
@@ -34,6 +37,11 @@ class Directories extends Exporter
         return compact('directories', 'regex');
     }
 
+    /**
+     * @param array<string, string> $packages
+     *
+     * @return array<string, array<int, string>>
+     */
     private function buildRegex(array $packages): array
     {
         $groups = [];
