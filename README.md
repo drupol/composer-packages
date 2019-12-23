@@ -1,7 +1,7 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/drupol/composer-packages.svg?style=flat-square)](https://packagist.org/packages/drupol/composer-packages)
  [![GitHub stars](https://img.shields.io/github/stars/drupol/composer-packages.svg?style=flat-square)](https://packagist.org/packages/drupol/composer-packages)
  [![Total Downloads](https://img.shields.io/packagist/dt/drupol/composer-packages.svg?style=flat-square)](https://packagist.org/packages/drupol/composer-packages)
- [![Build Status](https://img.shields.io/travis/drupol/composer-packages/master.svg?style=flat-square)](https://travis-ci.org/drupol/composer-packages)
+ [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/drupol/composer-packages/Continuous%20Integration?style=flat-square)](https://github.com/drupol/composer-packages/actions)
  [![Scrutinizer code quality](https://img.shields.io/scrutinizer/quality/g/drupol/composer-packages/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/drupol/composer-packages/?branch=master)
  [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/drupol/composer-packages/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/drupol/composer-packages/?branch=master)
  [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/drupol/composer-packages/master)](https://stryker-mutator.github.io)
@@ -187,7 +187,7 @@ $version = Versions::symfonyProcess();
 
 ## Code quality and tests
 
-Every time changes are introduced into the library, [Travis CI](https://travis-ci.org/drupol/composer-packages/builds) 
+Every time changes are introduced into the library, [Github](https://github.com/drupol/composer-packages/actions)
 run the tests and the benchmarks.
 
 The library has tests written with [PHPUnit](http://www.phpunit.de/).
