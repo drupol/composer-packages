@@ -19,21 +19,21 @@ class Packages extends Exporter
         );
 
         $packageNames = array_map(
-            static function (array $data) {
+            static function (array $data): string {
                 return $data['name'];
             },
             $packagesData
         );
 
-        if (false !== $packages = array_combine($packageNames, $packagesData)) {
-            ksort($packages);
-
-            $regex = $this->buildRegex($packages);
-
-            return compact('packages', 'regex');
+        if (false === $packages = array_combine($packageNames, $packagesData)) {
+            return [];
         }
 
-        return [];
+        ksort($packages);
+
+        $regex = $this->buildRegex($packages);
+
+        return compact('packages', 'regex');
     }
 
     /**
