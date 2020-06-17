@@ -12,9 +12,6 @@ use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
 use ReflectionException;
 
-/**
- * Class Plugin.
- */
 final class Plugin implements EventSubscriberInterface, PluginInterface
 {
     /**
@@ -49,5 +46,22 @@ final class Plugin implements EventSubscriberInterface, PluginInterface
         (new ClassGenerator($composerEvent))->regenerateClasses();
 
         $composerEvent->getIO()->write('<info>drupol/composer-packages:</info> Done.');
+    }
+
+    public function deactivate(Composer $composer, IOInterface $io)
+    {
+    }
+
+    public function uninstall(Composer $composer, IOInterface $io)
+    {
+        array_map(
+            'unlink',
+            glob(
+                sprintf(
+                    '%s/../build/',
+                    __DIR__
+                )
+            )
+        );
     }
 }

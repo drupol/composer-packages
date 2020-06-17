@@ -74,7 +74,6 @@ final class PluginTest extends TestCase
         $locker = new Locker(
             $this->io,
             new JsonFile(__DIR__ . '/../composer.lock'),
-            $repositoryManager,
             $installationManager,
             file_get_contents(__DIR__ . '/../composer.json')
         );
