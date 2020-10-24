@@ -1,13 +1,13 @@
-[![Latest Stable Version](https://img.shields.io/packagist/v/drupol/composer-packages.svg?style=flat-square)](https://packagist.org/packages/drupol/composer-packages)
- [![GitHub stars](https://img.shields.io/github/stars/drupol/composer-packages.svg?style=flat-square)](https://packagist.org/packages/drupol/composer-packages)
- [![Total Downloads](https://img.shields.io/packagist/dt/drupol/composer-packages.svg?style=flat-square)](https://packagist.org/packages/drupol/composer-packages)
- [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/drupol/composer-packages/Continuous%20Integration?style=flat-square)](https://github.com/drupol/composer-packages/actions)
- [![Scrutinizer code quality](https://img.shields.io/scrutinizer/quality/g/drupol/composer-packages/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/drupol/composer-packages/?branch=master)
- [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/drupol/composer-packages/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/drupol/composer-packages/?branch=master)
- [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/drupol/composer-packages/master)](https://stryker-mutator.github.io)
- [![License](https://img.shields.io/packagist/l/drupol/composer-packages.svg?style=flat-square)](https://packagist.org/packages/drupol/composer-packages)
- [![Say Thanks!](https://img.shields.io/badge/Say-thanks-brightgreen.svg?style=flat-square)](https://saythanks.io/to/drupol)
- [![Donate!](https://img.shields.io/badge/Donate-Paypal-brightgreen.svg?style=flat-square)](https://paypal.me/drupol)
+[![Latest Stable Version][latest stable version]][packagist]
+ [![GitHub stars][github stars]][packagist]
+ [![Total Downloads][total downloads]][packagist]
+ [![GitHub Workflow Status][github workflow status]][github actions]
+ [![Scrutinizer code quality][code quality]][code quality link]
+ [![Type Coverage][type coverage]][sheperd type coverage]
+ [![Code Coverage][code coverage]][code quality link]
+ [![License][license]][packagist]
+ [![Donate!][donate github]][github sponsor]
+ [![Donate!][donate paypal]][paypal sponsor]
 
 # Composer Packages
 
@@ -201,3 +201,31 @@ run `composer infection` to test your code.
 ## Contributing
 
 Feel free to contribute to this library by sending Github pull requests. I'm quite reactive :-)
+
+[latest stable version]: https://img.shields.io/packagist/v/drupol/composer-packages.svg?style=flat-square
+[packagist]: https://packagist.org/packages/drupol/composer-packages
+
+[github stars]: https://img.shields.io/github/stars/drupol/composer-packages.svg?style=flat-square
+
+[total downloads]: https://img.shields.io/packagist/dt/drupol/composer-packages.svg?style=flat-square
+
+[github workflow status]: https://img.shields.io/github/workflow/status/drupol/composer-packages/Continuous%20Integration?style=flat-square
+[github actions]: https://github.com/drupol/composer-packages/actions
+
+[code quality]: https://img.shields.io/scrutinizer/quality/g/drupol/composer-packages/master.svg?style=flat-square
+[code quality link]: https://scrutinizer-ci.com/g/drupol/composer-packages/?branch=master
+
+[type coverage]: https://shepherd.dev/github/drupol/composer-packages/coverage.svg
+[sheperd type coverage]: https://shepherd.dev/github/drupol/composer-packages
+
+[code coverage]: https://img.shields.io/scrutinizer/coverage/g/drupol/composer-packages/master.svg?style=flat-square
+[code quality link]: https://img.shields.io/scrutinizer/quality/g/drupol/composer-packages/master.svg?style=flat-square
+
+[license]: https://img.shields.io/packagist/l/drupol/composer-packages.svg?style=flat-square
+
+[donate github]: https://img.shields.io/badge/Sponsor-Github-brightgreen.svg?style=flat-square
+[github sponsor]: https://github.com/sponsors/drupol
+
+[donate paypal]: https://img.shields.io/badge/Sponsor-Paypal-brightgreen.svg?style=flat-square
+[paypal sponsor]: https://www.paypal.me/drupol
+
