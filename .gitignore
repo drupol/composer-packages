@@ -12,3 +12,5 @@
 /build/*
 !/tests/build/.gitkeep
 /tests/build/*
+/node_modules/
+package-lock.json
