@@ -1,41 +1,73 @@
 # https://help.github.com/en/categories/automating-your-workflow-with-github-actions
 
 on:
-  - pull_request
-  - push
+    - pull_request
+    - push
 
 name: "Continuous Integration"
 
 jobs:
-  grumphp:
-    name: "Grumphp"
+    run:
+        name: "Grumphp"
+        runs-on: ${{ matrix.operating-system }}
+        strategy:
+            fail-fast: false
+            matrix:
+                operating-system: [ubuntu-latest, windows-latest, macOS-latest]
+                php-versions: ['7.1', '7.2', '7.3', '7.4']
 
-    runs-on: ubuntu-latest
+        steps:
+            - name: Set git to use LF
+              run: |
+                  git config --global core.autocrlf false
+                  git config --global core.eol lf
 
-    strategy:
-      matrix:
-        php-binary:
-          - php7.1
-          - php7.2
-          - php7.3
+            - name: Checkout
+              uses: actions/checkout@v2.3.3
+              with:
+                  fetch-depth: 1
 
-    steps:
-      - name: "Checkout"
-        uses: actions/checkout@master
-        with:
-          fetch-depth: 1
+            - name: Install PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php-versions }}
+                  extensions: gd,mbstring,xdebug
 
-      - name: "Composer install"
-        run: ${{ matrix.php-binary }} $(which composer) install --no-interaction --no-progress --no-suggest
+            - name: Get Composer Cache Directory
+              id: composer-cache
+              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-      - name: "Composer install lowest dependencies"
-        if: matrix.dependencies == 'lowest'
-        run: ${{ matrix.php-binary }} $(which composer) update --no-interaction --no-progress --no-suggest --prefer-lowest
+            - name: Cache dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+                  restore-keys: ${{ runner.os }}-composer-
 
-      - name: "Run Grumphp"
-        run: ${{ matrix.php-binary }} vendor/bin/grumphp run
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+            - name: Install dependencies
+              run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
-      - name: "Scrutinizer"
-        run: wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
+            - name: Run tests
+              run: vendor/bin/phpunit
+
+            - name: Send PSALM data
+              run: vendor/bin/psalm --shepherd --stats
+              continue-on-error: true
+
+            - name: Send Scrutinizer data
+              run: |
+                  wget https://scrutinizer-ci.com/ocular.phar
+                  php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
+              continue-on-error: true
+
+            - name: Infection score report
+              run: |
+                  vendor/bin/infection run -j 2
+              continue-on-error: true
+
+            - name: PHP Insights report
+              run: |
+                  rm -rf composer.lock vendor
+                  composer require nunomaduro/phpinsights --dev
+                  vendor/bin/phpinsights analyse src/ -n
+              continue-on-error: true
