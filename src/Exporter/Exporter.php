@@ -40,9 +40,6 @@ abstract class Exporter implements ExporterInterface
     }
 
     /**
-     * @param string $template
-     * @param string $destination
-     *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError

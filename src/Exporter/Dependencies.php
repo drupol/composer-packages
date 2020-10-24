@@ -39,7 +39,6 @@ class Dependencies extends Exporter
 
     /**
      * @param array<string> $carry
-     * @param \Composer\Package\PackageInterface $package
      */
     protected function getDependenciesOf(array &$carry, PackageInterface $package): void
     {

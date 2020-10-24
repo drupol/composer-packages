@@ -14,10 +14,11 @@ use ReflectionException;
 
 final class Plugin implements EventSubscriberInterface, PluginInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function activate(Composer $composer, IOInterface $io): void
+    public function activate(Composer $composer, IOInterface $io)
+    {
+    }
+
+    public function deactivate(Composer $composer, IOInterface $io)
     {
     }
 
@@ -30,8 +31,6 @@ final class Plugin implements EventSubscriberInterface, PluginInterface
     }
 
     /**
-     * @param Event $composerEvent
-     *
      * @throws ReflectionException
      */
     public static function regeneration(Event $composerEvent): void
@@ -48,20 +47,17 @@ final class Plugin implements EventSubscriberInterface, PluginInterface
         $composerEvent->getIO()->write('<info>drupol/composer-packages:</info> Done.');
     }
 
-    public function deactivate(Composer $composer, IOInterface $io)
-    {
-    }
-
     public function uninstall(Composer $composer, IOInterface $io)
     {
-        array_map(
-            'unlink',
-            glob(
-                sprintf(
-                    '%s/../build/',
-                    __DIR__
-                )
+        $files = glob(
+            sprintf(
+                '%s/../build/',
+                __DIR__
             )
         );
+
+        foreach ($files as $file) {
+            unlink($file);
+        }
     }
 }
