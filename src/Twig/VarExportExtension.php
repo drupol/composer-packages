@@ -8,7 +8,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 /**
- * Class CamelCaseExtension.
+ * Class VarExportExtension.
  */
 final class VarExportExtension extends AbstractExtension
 {
