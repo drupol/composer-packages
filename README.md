@@ -221,7 +221,7 @@ Sponsor me on [Github][github sponsor] and/or any of [the contributors][6].
 [total downloads]:
   https://img.shields.io/packagist/dt/drupol/composer-packages.svg?style=flat-square
 [github workflow status]:
-  https://img.shields.io/github/workflow/status/drupol/composer-packages/Continuous%20Integration?style=flat-square
+  https://img.shields.io/github/workflow/status/drupol/composer-packages/Unit%20tests?style=flat-square
 [github actions]: https://github.com/drupol/composer-packages/actions
 [code quality]:
   https://img.shields.io/scrutinizer/quality/g/drupol/composer-packages/master.svg?style=flat-square
