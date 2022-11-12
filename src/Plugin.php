@@ -56,6 +56,10 @@ final class Plugin implements EventSubscriberInterface, PluginInterface
             )
         );
 
+        if (false === $files) {
+            return;
+        }
+
         foreach ($files as $file) {
             unlink($file);
         }

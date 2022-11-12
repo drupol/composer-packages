@@ -16,10 +16,7 @@ use ReflectionException;
 
 final class ClassGenerator
 {
-    /**
-     * @var Event
-     */
-    private $event;
+    private Event $event;
 
     public function __construct(Event $event)
     {
@@ -44,7 +41,7 @@ final class ClassGenerator
 
             $template = sprintf(
                 '%s.twig',
-                mb_strtolower($reflection->getShortName())
+                strtolower($reflection->getShortName())
             );
 
             $installPath = sprintf(

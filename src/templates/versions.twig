@@ -18,12 +18,12 @@ final class Versions implements \IteratorAggregate
     public const GENERATED_AT = {{ generatedAt }};
     public const ROOT_PACKAGE_NAME = '{{ rootPackageName }}';
 
-    private const PACKAGES = {{ packageNames|export }};
+    private const PACKAGES = {{ package_names|export }};
     private const REGEX_VERSIONS = '#^(?|
 {% for package, bundles in regex %}
         {{ package }}
-    {% for bundleVersion in bundles %}
-        {{ bundleVersion }}
+    {% for bundle_version in bundles %}
+        {{ bundle_version }}
     {% endfor %}
     )|
 {% endfor %}
@@ -49,7 +49,7 @@ final class Versions implements \IteratorAggregate
         return $version['MARK'] ?? null;
     }
 
-{% for name in packageNames %}
+{% for name in package_names %}
     /**
      * Get the package "{{ name }}" version.
      *
@@ -69,9 +69,7 @@ final class Versions implements \IteratorAggregate
      */
     public static function find(callable $callable): \Generator
     {
-        $instance = self::getInstance();
-
-        foreach ($instance->getIterator() as $package) {
+        foreach (self::getInstance() as $package) {
             if ($callable($package) === true) {
                 yield $package;
             }
@@ -97,7 +95,7 @@ final class Versions implements \IteratorAggregate
      */
     public static function versions(): \Generator
     {
-        yield from self::getInstance()->getIterator();
+        yield from self::getInstance();
     }
 
     /**

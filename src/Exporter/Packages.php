@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace drupol\ComposerPackages\Exporter;
 
-class Packages extends Exporter
+final class Packages extends Exporter
 {
-    /**
-     * {@inheritdoc}
-     */
     public function exportToArray(): array
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
@@ -31,9 +28,10 @@ class Packages extends Exporter
 
         ksort($packages);
 
-        $regex = $this->buildRegex($packages);
-
-        return compact('packages', 'regex');
+        return [
+            'packages' => $packages,
+            'regex' => $this->buildRegex($packages),
+        ];
     }
 
     /**

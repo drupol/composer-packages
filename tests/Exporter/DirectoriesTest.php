@@ -20,6 +20,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
+ *
  * @covers \drupol\ComposerPackages\Exporter\Directories
  */
 final class DirectoriesTest extends TestCase

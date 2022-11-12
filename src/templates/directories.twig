@@ -18,16 +18,13 @@ final class Directories implements \Countable, \IteratorAggregate
     private const REGEX_DIRECTORIES = '#^(?|
 {% for package, bundles in regex %}
         {{ package }}
-    {% for packageName in bundles %}
-        {{ packageName }}
+    {% for package_name in bundles %}
+        {{ package_name }}
     {% endfor %}
     )|
 {% endfor %}
     )$#x';
 
-    /**
-     * {@inheridoc}
-     */
     public function count(): int
     {
         return \count(self::DIRECTORIES);

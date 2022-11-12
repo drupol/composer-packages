@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
+ *
  * @covers \drupol\ComposerPackages\Utils\Name
  */
 final class NameTest extends TestCase

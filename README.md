@@ -1,52 +1,54 @@
 [![Latest Stable Version][latest stable version]][packagist]
- [![GitHub stars][github stars]][packagist]
- [![Total Downloads][total downloads]][packagist]
- [![GitHub Workflow Status][github workflow status]][github actions]
- [![Scrutinizer code quality][code quality]][code quality link]
- [![Type Coverage][type coverage]][sheperd type coverage]
- [![Code Coverage][code coverage]][code quality link]
- [![License][license]][packagist]
- [![Donate!][donate github]][github sponsor]
- [![Donate!][donate paypal]][paypal sponsor]
+[![GitHub stars][github stars]][packagist]
+[![Total Downloads][total downloads]][packagist]
+[![GitHub Workflow Status][github workflow status]][github actions]
+[![Scrutinizer code quality][code quality]][code quality link]
+[![Type Coverage][type coverage]][sheperd type coverage]
+[![Code Coverage][code coverage]][code quality link]
+[![License][license]][packagist] [![Donate!][donate github]][github sponsor]
 
 # Composer Packages
 
 ## Description
 
-Composer Packages is a Composer plugin for getting information about installed packages in your project.
+Composer Packages is a Composer plugin for getting information about installed
+packages in your project.
 
-It could be very useful for anyone who wants to build a package discovery system, crawling the filesystem is then not
-needed.
+It could be very useful for anyone who wants to build a package discovery
+system, crawling the filesystem is then not needed.
 
 ## Documentation
 
 This package provides:
 
-* An easy way to get information about installed packages,
-* An easy way to retrieve packages that has a particular types,
-* An easy way to find the installation directory of a package.
-* An easy way to get any package version.
-* An easy way to get any package dependencies.
+- An easy way to get information about installed packages,
+- An easy way to retrieve packages that has a particular types,
+- An easy way to find the installation directory of a package,
+- An easy way to get any package version,
+- An easy way to get any package dependencies.
 
 ### How does it work ?
 
-When doing a `composer update` or `composer install`, the plugin will generate classes that are going to be
-automatically loaded by the Composer autoload system.
+When doing a `composer update` or `composer install`, the plugin will generate
+classes that are going to be automatically loaded by the Composer autoload
+system.
 
-Those classes contains statical information about packages that are installed in your project.
-Among those static data, it also contains some useful methods. The number of methods in those classes can very depending
-on the number of packages that are in your project.
+Those classes contains statical information about packages that are installed in
+your project. Among those static data, it also contains some useful methods. The
+number of methods in those classes can very depending on the number of packages
+that are in your project.
 
-This package idea has been inspired by the package [ocramius/package-versions](https://github.com/Ocramius/PackageVersions)
-from the amazing [Marco Pivetta](https://github.com/Ocramius).
+This package idea has been inspired by the package
+[ocramius/package-versions](https://github.com/Ocramius/PackageVersions) from
+the amazing [Marco Pivetta](https://github.com/Ocramius).
 
 ## Requirements
 
-* PHP >= 7.1.3
+- PHP $\geq$ 7.1.3
 
 ## Installation
 
-```composer require drupol/composer-packages --dev```
+`composer require drupol/composer-packages --dev`
 
 ## Usage
 
@@ -152,7 +154,6 @@ foreach ($dependencies as $dependency) {
 $dependenciesArray = iterator_to_array($dependencies);
 ```
 
-
 **Note:** If composer is not already installed, you might get an error like
 below when using this package:
 
@@ -187,45 +188,57 @@ $version = Versions::symfonyProcess();
 
 ## Code quality and tests
 
-Every time changes are introduced into the library, [Github](https://github.com/drupol/composer-packages/actions)
-run the tests and the benchmarks.
+Every time changes are introduced into the library,
+[Github](https://github.com/drupol/composer-packages/actions) run the tests and
+the benchmarks.
 
 The library has tests written with [PHPUnit](http://www.phpunit.de/).
 
-Before each commit some inspections are executed with [GrumPHP](https://github.com/phpro/grumphp),
-run `./vendor/bin/grumphp run` to trigger them manually.
+Before each commit some inspections are executed with
+[GrumPHP](https://github.com/phpro/grumphp), run `./vendor/bin/grumphp run` to
+trigger them manually.
 
-[PHPInfection](https://github.com/infection/infection) is used to ensure that your code is properly tested,
-run `composer infection` to test your code.
+[PHPInfection](https://github.com/infection/infection) is used to ensure that
+your code is properly tested, run `composer infection` to test your code.
 
 ## Contributing
 
-Feel free to contribute to this library by sending Github pull requests. I'm quite reactive :-)
+Feel free to contribute by sending pull requests. We are a usually very
+responsive team and we will help you going through your pull request from the
+beginning to the end.
 
-[latest stable version]: https://img.shields.io/packagist/v/drupol/composer-packages.svg?style=flat-square
+For some reasons, if you can't contribute to the code and willing to help,
+sponsoring is a good, sound and safe way to show us some gratitude for the hours
+we invested in this package.
+
+Sponsor me on [Github][github sponsor] and/or any of [the contributors][6].
+
+[latest stable version]:
+  https://img.shields.io/packagist/v/drupol/composer-packages.svg?style=flat-square
 [packagist]: https://packagist.org/packages/drupol/composer-packages
-
-[github stars]: https://img.shields.io/github/stars/drupol/composer-packages.svg?style=flat-square
-
-[total downloads]: https://img.shields.io/packagist/dt/drupol/composer-packages.svg?style=flat-square
-
-[github workflow status]: https://img.shields.io/github/workflow/status/drupol/composer-packages/Continuous%20Integration?style=flat-square
+[github stars]:
+  https://img.shields.io/github/stars/drupol/composer-packages.svg?style=flat-square
+[total downloads]:
+  https://img.shields.io/packagist/dt/drupol/composer-packages.svg?style=flat-square
+[github workflow status]:
+  https://img.shields.io/github/workflow/status/drupol/composer-packages/Continuous%20Integration?style=flat-square
 [github actions]: https://github.com/drupol/composer-packages/actions
-
-[code quality]: https://img.shields.io/scrutinizer/quality/g/drupol/composer-packages/master.svg?style=flat-square
-[code quality link]: https://scrutinizer-ci.com/g/drupol/composer-packages/?branch=master
-
-[type coverage]: https://shepherd.dev/github/drupol/composer-packages/coverage.svg
+[code quality]:
+  https://img.shields.io/scrutinizer/quality/g/drupol/composer-packages/master.svg?style=flat-square
+[code quality link]:
+  https://scrutinizer-ci.com/g/drupol/composer-packages/?branch=master
+[type coverage]:
+  https://shepherd.dev/github/drupol/composer-packages/coverage.svg
 [sheperd type coverage]: https://shepherd.dev/github/drupol/composer-packages
-
-[code coverage]: https://img.shields.io/scrutinizer/coverage/g/drupol/composer-packages/master.svg?style=flat-square
-[code quality link]: https://img.shields.io/scrutinizer/quality/g/drupol/composer-packages/master.svg?style=flat-square
-
-[license]: https://img.shields.io/packagist/l/drupol/composer-packages.svg?style=flat-square
-
-[donate github]: https://img.shields.io/badge/Sponsor-Github-brightgreen.svg?style=flat-square
+[code coverage]:
+  https://img.shields.io/scrutinizer/coverage/g/drupol/composer-packages/master.svg?style=flat-square
+[code quality link]:
+  https://img.shields.io/scrutinizer/quality/g/drupol/composer-packages/master.svg?style=flat-square
+[license]:
+  https://img.shields.io/packagist/l/drupol/composer-packages.svg?style=flat-square
+[donate github]:
+  https://img.shields.io/badge/Sponsor-Github-brightgreen.svg?style=flat-square
 [github sponsor]: https://github.com/sponsors/drupol
-
-[donate paypal]: https://img.shields.io/badge/Sponsor-Paypal-brightgreen.svg?style=flat-square
-[paypal sponsor]: https://www.paypal.me/drupol
-
+[donate paypal]:
+  https://img.shields.io/badge/Sponsor-Paypal-brightgreen.svg?style=flat-square
+[6]: https://github.com/drupol/composer-packages/graphs/contributors

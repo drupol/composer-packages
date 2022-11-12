@@ -7,9 +7,6 @@ namespace drupol\ComposerPackages\Twig;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-/**
- * Class VarExportExtension.
- */
 final class VarExportExtension extends AbstractExtension
 {
     /**
@@ -28,7 +25,7 @@ final class VarExportExtension extends AbstractExtension
      *
      * @return TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('export', [$this, 'export'], ['is_safe' => ['html']]),

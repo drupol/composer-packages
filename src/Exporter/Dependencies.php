@@ -7,11 +7,8 @@ namespace drupol\ComposerPackages\Exporter;
 use Composer\Package\Loader\ArrayLoader;
 use Composer\Package\PackageInterface;
 
-class Dependencies extends Exporter
+final class Dependencies extends Exporter
 {
-    /**
-     * {@inheritdoc}
-     */
     public function exportToArray(): array
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
@@ -32,9 +29,10 @@ class Dependencies extends Exporter
             $packageDeps[$packageName] = array_values($packageDeps[$packageName]);
         }
 
-        $regex = $this->buildRegex($packageDeps);
-
-        return compact('packageDeps', 'regex');
+        return [
+            'packageDeps' => $packageDeps,
+            'regex' => $this->buildRegex($packageDeps),
+        ];
     }
 
     /**
@@ -47,7 +45,7 @@ class Dependencies extends Exporter
                 continue;
             }
 
-            if (0 === mb_strpos((string) $key, 'ext-')) {
+            if (0 === strpos((string) $key, 'ext-')) {
                 continue;
             }
 

@@ -6,11 +6,8 @@ namespace drupol\ComposerPackages\Exporter;
 
 use Composer\Package\Loader\ArrayLoader;
 
-class Directories extends Exporter
+final class Directories extends Exporter
 {
-    /**
-     * {@inheritdoc}
-     */
     public function exportToArray(): array
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
@@ -32,9 +29,10 @@ class Directories extends Exporter
                 ->getInstallPath($package);
         }
 
-        $regex = $this->buildRegex($directories);
-
-        return compact('directories', 'regex');
+        return [
+            'directories' => $directories,
+            'regex' => $this->buildRegex($directories),
+        ];
     }
 
     /**

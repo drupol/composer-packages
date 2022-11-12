@@ -23,21 +23,15 @@ final class Packages implements \Countable, \IteratorAggregate
     private const REGEX_PACKAGES = '#^(?|
 {% for package, bundles in regex %}
         {{ package }}
-    {% for packageName in bundles %}
-        {{ packageName }}
+    {% for package_name in bundles %}
+        {{ package_name }}
     {% endfor %}
     )|
 {% endfor %}
     )$#x';
 
-    /**
-     * @var Packages
-     */
-    private static $instance;
+    private static Packages $instance;
 
-    /**
-     * {@inheridoc}
-     */
     public function count(): int
     {
         return \count(self::PACKAGES);
@@ -45,8 +39,6 @@ final class Packages implements \Countable, \IteratorAggregate
 
     /**
      * Get a package.
-     *
-     * @param string $name
      *
      * @return null|CompletePackage
      *   A Composer package.
@@ -80,9 +72,7 @@ final class Packages implements \Countable, \IteratorAggregate
      */
     public static function find(callable $callable): Generator
     {
-        $instance = self::getInstance();
-
-        foreach ($instance->getIterator() as $package) {
+        foreach (self::getInstance() as $package) {
             if ($callable($package) === true) {
                 yield $package;
             }
@@ -92,7 +82,7 @@ final class Packages implements \Countable, \IteratorAggregate
     /**
      * {@inheritdoc}
      *
-     * @return CompletePackage[]|Generator
+     * @return Generator<string, CompletePackage>
      */
     public function getIterator(): Generator
     {
@@ -104,7 +94,7 @@ final class Packages implements \Countable, \IteratorAggregate
     /**
      * Package generator as array, keyed by their name.
      *
-     * @return array[]|Generator
+     * @return Generator<string, array>
      */
     public static function packages(): Generator
     {

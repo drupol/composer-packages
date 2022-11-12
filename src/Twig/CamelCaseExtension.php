@@ -8,9 +8,6 @@ use drupol\ComposerPackages\Utils\Name;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-/**
- * Class CamelCaseExtension.
- */
 final class CamelCaseExtension extends AbstractExtension
 {
     /**
@@ -18,7 +15,7 @@ final class CamelCaseExtension extends AbstractExtension
      *
      * @return TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('camelize', [Name::class, 'camelize']),

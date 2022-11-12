@@ -12,20 +12,11 @@ use Twig\Loader\FilesystemLoader;
 
 use function dirname;
 
-/**
- * Class Exporter.
- */
 abstract class Exporter implements ExporterInterface
 {
-    /**
-     * @var Event
-     */
-    private $event;
+    private Event $event;
 
-    /**
-     * @var Environment
-     */
-    private $twig;
+    private Environment $twig;
 
     public function __construct(Event $event)
     {

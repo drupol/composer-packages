@@ -1,0 +1,151 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method drupol\\\\ComposerPackages\\\\Exporter\\\\Dependencies\\:\\:buildRegex\\(\\) has parameter \\$packages with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Exporter/Dependencies.php
+
+		-
+			message: "#^Method drupol\\\\ComposerPackages\\\\Exporter\\\\Dependencies\\:\\:exportToArray\\(\\) should return array\\<string\\> but returns array\\<string, array\\<string, array\\<int, string\\>\\>\\>\\.$#"
+			count: 1
+			path: src/Exporter/Dependencies.php
+
+		-
+			message: "#^Method drupol\\\\ComposerPackages\\\\Exporter\\\\Directories\\:\\:exportToArray\\(\\) should return array\\<string\\> but returns array\\<string, array\\<string, array\\<int, string\\>\\|string\\>\\>\\.$#"
+			count: 1
+			path: src/Exporter/Directories.php
+
+		-
+			message: "#^Method drupol\\\\ComposerPackages\\\\Exporter\\\\Packages\\:\\:buildRegex\\(\\) has parameter \\$packages with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Exporter/Packages.php
+
+		-
+			message: "#^Method drupol\\\\ComposerPackages\\\\Exporter\\\\Packages\\:\\:exportToArray\\(\\) should return array\\<string\\> but returns array\\<string, array\\<string, mixed\\>\\>\\.$#"
+			count: 1
+			path: src/Exporter/Packages.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between false and array\\<string, mixed\\> will always evaluate to false\\.$#"
+			count: 1
+			path: src/Exporter/Packages.php
+
+		-
+			message: "#^Method drupol\\\\ComposerPackages\\\\Exporter\\\\Types\\:\\:exportToArray\\(\\) should return array\\<string\\> but returns array\\<string, array\\<int\\|string, array\\<int, mixed\\>\\>\\>\\.$#"
+			count: 1
+			path: src/Exporter/Types.php
+
+		-
+			message: "#^Method drupol\\\\ComposerPackages\\\\Exporter\\\\Versions\\:\\:exportToArray\\(\\) should return array\\<string\\> but returns array\\<string, array\\<array\\<int, string\\>\\|string\\>\\>\\.$#"
+			count: 1
+			path: src/Exporter/Versions.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between false and array\\<string, string\\> will always evaluate to false\\.$#"
+			count: 1
+			path: src/Exporter/Versions.php
+
+		-
+			message: "#^Access to an undefined property drupol\\\\ComposerPackages\\\\tests\\\\Exporter\\\\DirectoriesTest\\:\\:\\$composer\\.$#"
+			count: 3
+			path: tests/Exporter/DirectoriesTest.php
+
+		-
+			message: "#^Access to an undefined property drupol\\\\ComposerPackages\\\\tests\\\\Exporter\\\\DirectoriesTest\\:\\:\\$eventDispatcher\\.$#"
+			count: 1
+			path: tests/Exporter/DirectoriesTest.php
+
+		-
+			message: "#^Access to an undefined property drupol\\\\ComposerPackages\\\\tests\\\\Exporter\\\\DirectoriesTest\\:\\:\\$io\\.$#"
+			count: 3
+			path: tests/Exporter/DirectoriesTest.php
+
+		-
+			message: "#^Access to an undefined property drupol\\\\ComposerPackages\\\\tests\\\\Exporter\\\\DirectoriesTest\\:\\:\\$plugin\\.$#"
+			count: 1
+			path: tests/Exporter/DirectoriesTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$baseDir of class Composer\\\\Config constructor expects string\\|null, string\\|false given\\.$#"
+			count: 1
+			path: tests/Exporter/DirectoriesTest.php
+
+		-
+			message: "#^Parameter \\#4 \\$composerFileContents of class Composer\\\\Package\\\\Locker constructor expects string, string\\|false given\\.$#"
+			count: 1
+			path: tests/Exporter/DirectoriesTest.php
+
+		-
+			message: "#^Call to an undefined method Composer\\\\IO\\\\IOInterface\\:\\:expects\\(\\)\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Call to an undefined static method ComposerPackages\\\\Dependencies\\:\\:aB\\(\\)\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Call to an undefined static method ComposerPackages\\\\Dependencies\\:\\:unexistent\\(\\)\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Call to an undefined static method ComposerPackages\\\\Directories\\:\\:bazTab\\(\\)\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Call to an undefined static method ComposerPackages\\\\Directories\\:\\:unexistent\\(\\)\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Call to an undefined static method ComposerPackages\\\\Packages\\:\\:fooBar\\(\\)\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Call to an undefined static method ComposerPackages\\\\Packages\\:\\:unexistent\\(\\)\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Call to an undefined static method ComposerPackages\\\\Types\\:\\:a\\(\\)\\.$#"
+			count: 4
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Call to an undefined static method ComposerPackages\\\\Types\\:\\:unexistent\\(\\)\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Call to an undefined static method ComposerPackages\\\\Versions\\:\\:bazTab\\(\\)\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Call to an undefined static method ComposerPackages\\\\Versions\\:\\:unexistent\\(\\)\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$directory of function mkdir expects string, string\\|false given\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$filename of function file_exists expects string, string\\|false given\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$baseDir of class Composer\\\\Config constructor expects string\\|null, string\\|false given\\.$#"
+			count: 1
+			path: tests/PluginTest.php
+
+		-
+			message: "#^Parameter \\#4 \\$composerFileContents of class Composer\\\\Package\\\\Locker constructor expects string, string\\|false given\\.$#"
+			count: 1
+			path: tests/PluginTest.php

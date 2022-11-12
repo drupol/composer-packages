@@ -1,13 +1,19 @@
 build:
-    nodes:
-        analysis:
-            tests:
-                override:
-                    - php-scrutinizer-run
+    environment:
+        php:
+            version: 8.1.12
+            ini:
+                xdebug.mode: off
+            pecl_extensions:
+                - pcov
+    image: default-bionic
+    tests:
+        override:
+            - php-scrutinizer-run
 
 filter:
     paths:
-        - 'src/*'
+        - "src/*"
 
 tools:
     external_code_coverage:

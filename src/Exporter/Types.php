@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace drupol\ComposerPackages\Exporter;
 
-class Types extends Exporter
+final class Types extends Exporter
 {
     public function exportToArray(): array
     {
@@ -27,6 +27,8 @@ class Types extends Exporter
             $types[$package['type']][] = $package;
         }
 
-        return compact('types');
+        return [
+            'types' => $types,
+        ];
     }
 }

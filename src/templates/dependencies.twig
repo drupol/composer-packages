@@ -21,8 +21,8 @@ final class Dependencies implements \IteratorAggregate
     private const REGEX_DEPENDENCIES = '#^(?|
 {% for package, bundles in regex %}
         {{ package }}
-    {% for packageName in bundles %}
-        {{ packageName }}
+    {% for package_name in bundles %}
+        {{ package_name }}
     {% endfor %}
     )|
 {% endfor %}
@@ -56,7 +56,7 @@ final class Dependencies implements \IteratorAggregate
     /**
      * {@inheritdoc}
      *
-     * @return CompletePackage[]|Generator
+     * @return Generator<int, CompletePackage>
      */
     public function getIterator(): Generator
     {
@@ -68,15 +68,15 @@ final class Dependencies implements \IteratorAggregate
     /**
      * Get the dependencies of a package.
      *
-     * @param string $packageName
+     * @param string $package_name
      *   The package name.
      *
      * @return string[]|Generator
      *   The package dependencies.
      */
-    private static function getDependencies(string $packageName): Generator
+    private static function getDependencies(string $package_name): Generator
     {
-        if (preg_match(self::REGEX_DEPENDENCIES, $packageName, $package)) {
+        if (preg_match(self::REGEX_DEPENDENCIES, $package_name, $package)) {
             yield from self::DEPENDENCIES[$package['MARK']];
         }
     }

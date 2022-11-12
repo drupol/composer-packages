@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace drupol\ComposerPackages\Exporter;
 
-class Versions extends Exporter
+final class Versions extends Exporter
 {
-    /**
-     * {@inheritdoc}
-     */
     public function exportToArray(): array
     {
         $data = $this->getEvent()->getComposer()->getLocker()->getLockData();
@@ -19,28 +16,29 @@ class Versions extends Exporter
         );
 
         $packageNames = array_map(
-            static function (array $data) {
+            static function (array $data): string {
                 return $data['name'];
             },
             $packagesData
         );
 
         $packageVersions = array_map(
-            static function (array $data) {
+            static function (array $data): string {
                 return $data['version'];
             },
             $packagesData
         );
 
-        if (false !== $versions = array_combine($packageNames, $packageVersions)) {
-            ksort($versions);
-
-            $regex = $this->buildRegex($versions);
-
-            return compact('packageNames', 'regex');
+        if (false === $versions = array_combine($packageNames, $packageVersions)) {
+            return [];
         }
 
-        return [];
+        ksort($versions);
+
+        return [
+            'package_names' => $packageNames,
+            'regex' => $this->buildRegex($versions),
+        ];
     }
 
     /**
